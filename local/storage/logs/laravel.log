@@ -138,7 +138,8 @@
 #32 C:\\laragon\\www\\app_laravel\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #33 {main}
 "} 
-[2022-04-28 01:45:56] local.ERROR: Undefined variable $title_modal (View: C:\laragon\www\app_laravel\resources\views\livewire\gift-set.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\0dffab71c9b405569ca05e5885e7cdcba96e5963.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable $title_modal (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\gift-set.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\0dffab71c9b405569ca05e5885e7cdcba96e5963.php:100)
+[2022-04-28 01:45:56] local.ERROR: Undefined variable $title_modal (View: C:\laragon\www\app_laravel\resources\views\livewire\gift-set.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\0dffab71c9b405569ca05e5885e7cdcba96e5963.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable $title_modal (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\gift-set.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\0dffab71c9b405569ca05e5885e7cdcba96e5963.php:100)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\0dffab71c9b405569ca05e5885e7cdcba96e5963.php(100): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 100)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -609,7 +610,8 @@
 #52 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #53 {main}
 "} 
-[2022-04-28 02:03:24] local.ERROR: Undefined variable $order (View: C:\laragon\www\app_laravel\resources\views\livewire\gift-sets.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\c69f7f77dd36aaca8be0ba35e90e71becae46c1d.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable $order (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\gift-sets.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\c69f7f77dd36aaca8be0ba35e90e71becae46c1d.php:85)
+[2022-04-28 02:03:24] local.ERROR: Undefined variable $order (View: C:\laragon\www\app_laravel\resources\views\livewire\gift-sets.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\c69f7f77dd36aaca8be0ba35e90e71becae46c1d.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable $order (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\gift-sets.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\c69f7f77dd36aaca8be0ba35e90e71becae46c1d.php:85)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\c69f7f77dd36aaca8be0ba35e90e71becae46c1d.php(85): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 85)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -1550,7 +1552,8 @@
 #68 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #69 {main}
 "} 
-[2022-05-08 21:08:40] local.ERROR: Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
+[2022-05-08 21:08:40] local.ERROR: Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php(11): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Use of undefine...', 'C:\\\\laragon\\\\www\\\\...', 11, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -1698,7 +1701,8 @@
 #69 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #70 {main}
 "} 
-[2022-05-08 21:08:52] local.ERROR: Undefined variable: address (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: address (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
+[2022-05-08 21:08:52] local.ERROR: Undefined variable: address (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: address (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php(11): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 11, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -1846,7 +1850,8 @@
 #69 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #70 {main}
 "} 
-[2022-05-08 21:08:57] local.ERROR: Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
+[2022-05-08 21:08:57] local.ERROR: Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\laragon\www\app_laravel\resources\views\livewire\profile.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Use of undefined constant user - assumed 'user' (this will throw an Error in a future version of PHP) (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\profile.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php:11)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\89f41235e9a44d60a037b8f2b88ee43e13c31b21.php(11): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Use of undefine...', 'C:\\\\laragon\\\\www\\\\...', 11, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -2126,7 +2131,8 @@
 #62 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #63 {main}
 "} 
-[2022-05-10 01:46:30] local.ERROR: Undefined variable: products (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: products (View: C:\\laragon\\www\\app_laravel\esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:193)
+[2022-05-10 01:46:30] local.ERROR: Undefined variable: products (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: products (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:193)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php(193): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 193, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -2274,7 +2280,8 @@
 #69 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #70 {main}
 "} 
-[2022-05-10 01:47:01] local.ERROR: Undefined variable: products (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: products (View: C:\\laragon\\www\\app_laravel\esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:193)
+[2022-05-10 01:47:01] local.ERROR: Undefined variable: products (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: products (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:193)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php(193): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 193, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -3032,7 +3039,8 @@
 #56 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #57 {main}
 "} 
-[2022-05-10 02:18:25] local.ERROR: Undefined variable: collection (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: collection (View: C:\\laragon\\www\\app_laravel\esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:177)
+[2022-05-10 02:18:25] local.ERROR: Undefined variable: collection (View: C:\laragon\www\app_laravel\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: collection (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php:177)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\storage\\framework\\views\\5179f0e037f300a7833681c4b9d2079507ced55b.php(177): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 177, Array)
 #1 C:\\laragon\\www\\app_laravel\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -3180,7 +3188,8 @@
 #69 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #70 {main}
 "} 
-[2022-05-10 02:46:26] local.ERROR: Disk [products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
+[2022-05-10 02:46:26] local.ERROR: Disk [products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(115): Illuminate\\Filesystem\\FilesystemManager->resolve('products')
 #1 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(78): Illuminate\\Filesystem\\FilesystemManager->get('products')
@@ -3358,7 +3367,8 @@
 #84 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #85 {main}
 "} 
-[2022-05-10 02:47:20] local.ERROR: Disk [image_products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [image_products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
+[2022-05-10 02:47:20] local.ERROR: Disk [image_products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [image_products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(115): Illuminate\\Filesystem\\FilesystemManager->resolve('image_products')
 #1 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(78): Illuminate\\Filesystem\\FilesystemManager->get('image_products')
@@ -3536,7 +3546,8 @@
 #84 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #85 {main}
 "} 
-[2022-05-10 02:48:54] local.ERROR: Disk [products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\orders.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\esources\\views\\livewire\\orders.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
+[2022-05-10 02:48:54] local.ERROR: Disk [products] does not have a configured driver. (View: C:\laragon\www\app_laravel\resources\views\livewire\orders.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Disk [products] does not have a configured driver. (View: C:\\laragon\\www\\app_laravel\
+esources\\views\\livewire\\orders.blade.php) at C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php:132)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(115): Illuminate\\Filesystem\\FilesystemManager->resolve('products')
 #1 C:\\laragon\\www\\app_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(78): Illuminate\\Filesystem\\FilesystemManager->get('products')
@@ -3690,7 +3701,8 @@
 #72 C:\\laragon\\www\\app_laravel\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #73 {main}
 "} 
-[2022-05-13 03:16:43] local.ERROR: Undefined variable: imthisge (View: C:\laragon\www\app_laravel_subir\local\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\storage\\framework\\views\\330d6baad752b5b9652188c3f847223b8712150d.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: imthisge (View: C:\\laragon\\www\\app_laravel_subir\\local\esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\storage\\framework\\views\\330d6baad752b5b9652188c3f847223b8712150d.php:62)
+[2022-05-13 03:16:43] local.ERROR: Undefined variable: imthisge (View: C:\laragon\www\app_laravel_subir\local\resources\views\livewire\product-form.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\storage\\framework\\views\\330d6baad752b5b9652188c3f847223b8712150d.php","data":[]},"userId":1,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: imthisge (View: C:\\laragon\\www\\app_laravel_subir\\local\
+esources\\views\\livewire\\product-form.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\storage\\framework\\views\\330d6baad752b5b9652188c3f847223b8712150d.php:62)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel_subir\\local\\storage\\framework\\views\\330d6baad752b5b9652188c3f847223b8712150d.php(62): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined varia...', 'C:\\\\laragon\\\\www\\\\...', 62, Array)
 #1 C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(83): include('C:\\\\laragon\\\\www\\\\...')
@@ -3808,7 +3820,8 @@
 #54 C:\\laragon\\www\\app_laravel_subir\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #55 {main}
 "} 
-[2022-05-13 03:27:44] local.ERROR: Call to undefined method League\Flysystem\Filesystem::link (View: C:\laragon\www\app_laravel_subir\local\resources\views\livewire\orders.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\league\\flysystem\\src\\Plugin\\PluggableTrait.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Call to undefined method League\\Flysystem\\Filesystem::link (View: C:\\laragon\\www\\app_laravel_subir\\local\esources\\views\\livewire\\orders.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\league\\flysystem\\src\\Plugin\\PluggableTrait.php:90)
+[2022-05-13 03:27:44] local.ERROR: Call to undefined method League\Flysystem\Filesystem::link (View: C:\laragon\www\app_laravel_subir\local\resources\views\livewire\orders.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\league\\flysystem\\src\\Plugin\\PluggableTrait.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Call to undefined method League\\Flysystem\\Filesystem::link (View: C:\\laragon\\www\\app_laravel_subir\\local\
+esources\\views\\livewire\\orders.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\league\\flysystem\\src\\Plugin\\PluggableTrait.php:90)
 [stacktrace]
 #0 C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemAdapter.php(827): League\\Flysystem\\Filesystem->__call('link', Array)
 #1 C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemManager.php(411): Illuminate\\Filesystem\\FilesystemAdapter->__call('link', Array)
@@ -3960,7 +3973,8 @@
 #71 C:\\laragon\\www\\app_laravel_subir\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #72 {main}
 "} 
-[2022-05-13 03:37:19] local.ERROR: htmlspecialchars() expects parameter 1 to be string, object given (View: C:\laragon\www\app_laravel_subir\local\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): htmlspecialchars() expects parameter 1 to be string, object given (View: C:\\laragon\\www\\app_laravel_subir\\local\esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php:118)
+[2022-05-13 03:37:19] local.ERROR: htmlspecialchars() expects parameter 1 to be string, object given (View: C:\laragon\www\app_laravel_subir\local\resources\views\dashboard.blade.php) {"view":{"view":"C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php","data":[]},"userId":2,"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): htmlspecialchars() expects parameter 1 to be string, object given (View: C:\\laragon\\www\\app_laravel_subir\\local\
+esources\\views\\dashboard.blade.php) at C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php:118)
 [stacktrace]
 #0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'htmlspecialchar...', 'C:\\\\laragon\\\\www\\\\...', 118, Array)
 #1 C:\\laragon\\www\\app_laravel_subir\\local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(118): htmlspecialchars(Object(Illuminate\\Filesystem\\FilesystemAdapter), 3, 'UTF-8', true)
@@ -7155,4 +7169,62 @@ Ensure that the [name, id, data] of the Livewire component wasn't tampered with 
 #54 /Users/usuario/Sites/app_laravel_subir/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #55 /Users/usuario/.composer/vendor/laravel/valet/server.php(234): require('/Users/usuario/...')
 #56 {main}
+"} 
+[2022-08-17 18:15:45] local.ERROR: Undefined variable $guest {"userId":1,"exception":"[object] (ErrorException(code: 0): Undefined variable $guest at /Users/usuario/Sites/app_laravel_subir/local/app/Http/Livewire/Users.php:68)
+[stacktrace]
+#0 /Users/usuario/Sites/app_laravel_subir/local/app/Http/Livewire/Users.php(68): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', '/Users/usuario/...', 68)
+#1 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Http\\Livewire\\Users->inviteReferrals(1)
+#2 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#3 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#4 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#5 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/ComponentConcerns/HandlesActions.php(149): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array)
+#6 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/HydrationMiddleware/PerformActionCalls.php(38): Livewire\\Component->callMethod('inviteReferrals', Array, Object(Closure))
+#7 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/LifecycleManager.php(89): Livewire\\HydrationMiddleware\\PerformActionCalls::hydrate(Object(App\\Http\\Livewire\\Users), Object(Livewire\\Request))
+#8 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/Connection/ConnectionHandler.php(13): Livewire\\LifecycleManager->hydrate()
+#9 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/Controllers/HttpConnectionHandler.php(20): Livewire\\Connection\\ConnectionHandler->handle(Array)
+#10 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(48): Livewire\\Controllers\\HttpConnectionHandler->__invoke('users')
+#11 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Route.php(262): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(Livewire\\Controllers\\HttpConnectionHandler), '__invoke')
+#12 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\\Routing\\Route->runController()
+#13 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Router.php(721): Illuminate\\Routing\\Route->run()
+#14 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(128): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#23 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Router.php(723): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Router.php(698): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#31 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Router.php(662): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#32 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Routing/Router.php(651): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#33 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(167): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#34 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(128): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#35 /Users/usuario/Sites/app_laravel_subir/local/vendor/livewire/livewire/src/DisableBrowserCache.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Livewire\\DisableBrowserCache->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(36): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /Users/usuario/Sites/app_laravel_subir/local/vendor/fruitcake/laravel-cors/src/HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 /Users/usuario/Sites/app_laravel_subir/local/vendor/fideloper/proxy/src/TrustProxies.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(167): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#50 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(142): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#51 /Users/usuario/Sites/app_laravel_subir/local/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#52 /Users/usuario/Sites/app_laravel_subir/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#53 /Users/usuario/.composer/vendor/laravel/valet/server.php(234): require('/Users/usuario/...')
+#54 {main}
 "} 

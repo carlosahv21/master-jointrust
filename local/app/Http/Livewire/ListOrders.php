@@ -13,6 +13,11 @@ class ListOrders extends Component
 {
     use WithPagination;
     public $item, $action, $search, $countOrders, $idDomiciliary, $commentaries = '';
+    public $statusFilter = 'Pendiente';
+    public $perPage = '5';
+    public $orderBy = 'date_order';
+    public $sortBy = 'asc';
+
     public $selected = [];
     public $orders_products = [];
     
@@ -97,11 +102,25 @@ class ListOrders extends Component
         $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Comentario agregado al pedido!']); 
     }
 
+
+    // public function filterStatus($status)
+    // {
+    //     $this->statusFilter = $status;
+    // }
+
     public function render()
     {
         return view('livewire.list-orders', 
             [
-                'orders' => Order::search('code', $this->search)->paginate(10),
+                // 'orders' => Order::search('code', $this->search)->paginate(10),
+                'orders' => Order::when($this->statusFilter, function($query) {
+                        if($this->statusFilter !== 'Todos'){
+                            $query->where('state',$this->statusFilter);
+                        }
+                    })
+                    ->search('code', $this->search)
+                    ->orderBy($this->orderBy, $this->sortBy)
+                    ->paginate($this->perPage),
                 'users' => User::where('role', 'domiciliary')->get()
             ]
         );

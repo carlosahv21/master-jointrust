@@ -115,7 +115,7 @@ class Orders extends Component
         $order->partial_delivery = $this->radioButtom;
         $order->delivery_address = $this->delivery_address;
         $order->date_order = $this->date_order;
-        $order->state = 'Creado';
+        $order->state = 'Pendiente';
         $order->commentaries = '';
         $order->user_id = auth()->user()->id;
 
