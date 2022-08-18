@@ -11,7 +11,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#">Jointrust</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Lista de Kits de REgalos</li>
+                    <li class="breadcrumb-item active" aria-current="page">Lista de Kits de Regalos</li>
                 </ol>
             </nav>
         </div>

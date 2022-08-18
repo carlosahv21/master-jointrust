@@ -6,8 +6,7 @@
 <?php $component->withAttributes([]); ?>
 
     <?php if(in_array(request()->route()->getName(), ['dashboard', 'profile', 'products', 'users', 'orders','list-order' ,'bootstrap-tables', 'transactions',
-    'buttons',
-    'forms', 'modals', 'notifications', 'typography', 'upgrade-to-pro', 'list-domiciliary', 'gift-sets'])): ?>
+    'buttons', 'forms', 'modals', 'notifications', 'typography', 'upgrade-to-pro', 'list-domiciliary', 'gift-sets'])): ?>
 
     
     <?php echo $__env->make('layouts.nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

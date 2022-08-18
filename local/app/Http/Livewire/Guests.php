@@ -5,12 +5,18 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Guest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class Guests extends Component
 {
 
     public $inputs = [];
+
+    protected $listeners = [
+        'inviteReferrals' => 'inviteReferrals'
+    ];
+
 
     protected $rules = [
         'inputs.*.guest_name' => 'required',
@@ -26,6 +32,17 @@ class Guests extends Component
     public function addInput()
     {
         $this->inputs->push(['guest_name' => '']);
+    }
+
+    public function show($id)
+    {
+
+        $guests = DB::table('guests')
+            ->where('user_id', '=', $id)
+            ->get();
+        $guests = collect($guests)->toArray();
+
+        return view('livewire.show-guest',['guests' => $guests]);
     }
 
     public function removeInput($key)
@@ -73,6 +90,21 @@ class Guests extends Component
         if($user->first_time != 'yes'){
             $this->dispatchBrowserEvent('openModal', ['name' => 'first_time']);
         }
+    }
+
+    public function inviteReferrals($data)
+    {
+
+        $guest = Guest::findOrFail($data);
+        $guest->guest = 1;
+
+        $guest->save();
+        
+        $this->dispatchBrowserEvent('notify', ['type' => 'info', 'message' => 'No podras invitar a tus amigos nuevamente']);
+
+        return ['name' => $guest->guest_name, 'phone' => $guest->guest_phone];
+
+
     }
 
 

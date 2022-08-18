@@ -228,6 +228,51 @@
                     Livewire.emit('resetGitf')
                 }
             });
+
+            $('.inviteReferrals').on('click', function() {
+                var identifier = $(this).attr('id');
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    type: "get",
+                    url: '/invite/'+id,   
+                    success: function(respu){
+                        
+                        var message = "https://api.whatsapp.com/send/?phone=+57"+ respu.phone +"&text=Hola "+ respu.name +", te invitamos para que formes parte de Jointrust y hagas tus pedidos online. Crea tu usuario en http://dashboard.jointrust.com.co/register/ , bienvenido!";
+
+                        $('#some').val(message);
+                        var $temp = $("<input>")
+                        $("body").append($temp);
+                        $temp.val($('#some').val()).select();
+                        document.execCommand("copy");
+                        $temp.remove();
+                        
+                        $('#'+identifier).attr('disabled',true);
+                        
+                        const notyf = new Notyf({
+                        position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+                            types: [
+                                {
+                                    type: 'success',
+                                    background: '#10B981',
+                                    icon: {
+                                        className: 'fas fa-check',
+                                        tagName: 'span',
+                                        color: '#fff'
+                                    },
+                                    dismissible: false
+                                }
+                            ]
+                        });
+                        notyf.open({
+                            type: 'success',
+                            message: 'Mensaje copiado. Pegalo en tu navegador para que invites al usuario!',
+                        });
+                    }
+                });
+            });
             
             
              

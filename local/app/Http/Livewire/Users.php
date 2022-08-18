@@ -17,8 +17,7 @@ class Users extends Component
 
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
-        'refreshParent' => '$refresh',
-        'getReferrals'
+        'refreshParent' => '$refresh'
     ];
 
     public function selectItem($item, $action)
@@ -34,11 +33,6 @@ class Users extends Component
             $this->title_modal = 'Crear Usuario';
             $this->dispatchBrowserEvent('openModal', ['name' => 'createUser']);
             $this->emit('clearForm');
-        }else if($action == 'seeReferrals'){
-            $this->dispatchBrowserEvent('openModal', ['name' => 'seeReferrals']);
-            $this->emit('getReferrals', $this->item);
-        }else if($action == 'inviteReferrals'){
-            $this->emit('inviteReferrals', $this->item);
         }else{
             $this->title_modal = 'Editar Usuario';
             $this->dispatchBrowserEvent('openModal', ['name' => 'createUser']);
@@ -53,28 +47,6 @@ class Users extends Component
         $this->selected = null;
 
         $this->dispatchBrowserEvent('closeModal', ['name' => 'deleteUserMasive']);
-
-    }
-
-    public function getReferrals($modelId)
-    {
-        $this->referrals = DB::table('guests')
-            ->where('user_id', '=', $modelId)
-            ->get();
-    }
-
-    public function inviteReferrals($modelId)
-    {
-        dd($guest);
-
-        $guest = Guest::findOrFail($this->item);
-        $guest->guest = 1;
-        dd($guest);
-        $guest->save();
-
-
-        // $this->emit('getReferrals', $this->item);
-        // $this->dispatchBrowserEvent('getLinkInvitation', ['name' => $guest->name, 'phone' => $guest->phone]);
 
     }
 

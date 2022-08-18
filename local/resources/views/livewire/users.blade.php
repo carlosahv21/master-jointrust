@@ -115,7 +115,7 @@
                                         <li><a wire:click="selectItem({{ $user->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
                                         @if ($user->role != 'admin')
                                             <li><button wire:click="selectItem({{ $user->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
-                                            <li><button wire:click="selectItem({{ $user->id }}, 'seeReferrals')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</button></li>
+                                            <li><a href="/referals/{{$user->id}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
                                         @endif
                                         </ul>
                                     </li>
@@ -214,7 +214,7 @@
                                         </div>    
                                     </th>
                                 @else
-                                    <th> <button wire:click.ignore="inviteReferrals( {{$referrals->id}} )" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
+                                    <th> <button wire:click.ignore="selectItem({{ $referrals->id }}, 'inviteReferrals')" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
                                 @endif
                             </tr>
                         @endforeach

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ResetPasswordExample;
 use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
+use App\Http\Livewire\Guests;
 use App\Http\Livewire\Products;
 use App\Http\Livewire\Orders;
 use App\Http\Livewire\ListOrders;
@@ -59,6 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('/profile-example', ProfileExample::class)->name('profile-example');
     Route::get('/users', Users::class)->name('users');
+
+    Route::get('/referals/{id}', [Guests::class, 'show']);
+    Route::get('/invite/{id}', [Guests::class, 'inviteReferrals'])->name('invite');
+
     Route::get('/list-products', Products::class)->name('products');
     // Route::get('/orders', Orders::class)->name('orders');
     Route::get('/orders', Orders::class)->name('orders');
