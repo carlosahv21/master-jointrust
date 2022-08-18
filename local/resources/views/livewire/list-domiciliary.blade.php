@@ -1,4 +1,4 @@
-@section('title','Domiciliados')
+@section('title','Domiciliarios')
 
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -11,7 +11,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#">Jointrust</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Lista de Domiciliados</li>
+                    <li class="breadcrumb-item active" aria-current="page">Lista de Domiciliarios</li>
                 </ol>
             </nav>
         </div>
@@ -104,7 +104,7 @@
             </div>
         @else
             <div class="d-flex justify-content-center py-6">
-                <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay domiciliados para mostrar </span>
+                <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay domiciliarios para mostrar </span>
             </div>
         @endif
     </div>

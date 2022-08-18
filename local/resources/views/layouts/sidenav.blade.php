@@ -52,7 +52,7 @@
         <li class="nav-item {{ Request::segment(1) == 'list-domiciliary' ? 'active' : '' }}">
           <a href="/list-domiciliary" class="nav-link">
             <span class="sidebar-icon"><i class="fas fa-user-check"></i></span>
-            <span class="sidebar-text">Domiciliados</span>
+            <span class="sidebar-text">Domiciliarios</span>
           </a>
         </li>
         <li class="nav-item {{ Request::segment(1) == 'gift-sets' ? 'active' : '' }}">
