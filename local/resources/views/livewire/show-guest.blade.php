@@ -67,7 +67,7 @@
                                         </td>
                                         <td>{{ $guest->guest_phone }}</td>
                                         <td style="width: 5%;">
-                                            <button data-id="{{ $guest->id }}" class="btn btn-secondary inviteReferrals" @if( $guest->guest ) disabled="true" @endif  id="inviteReferrals{{ $guest->id }}"> <i class="fas fa-sms"></i> Invitar</button>
+                                            <button data-id="{{ $guest->id }}" class="btn btn-secondary inviteReferrals"  id="inviteReferrals{{ $guest->id }}"> <i class="fas fa-sms"></i> Invitar</button>
                                         </td>
                                     </tr>
                                 @endforeach

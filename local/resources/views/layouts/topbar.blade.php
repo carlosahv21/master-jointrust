@@ -148,6 +148,8 @@
               <a class="dropdown-item"> <i class="fas fa-box" aria-hidden="true"></i> Agregar Producto</a>
             @elseif(auth()->user()->role == 'client')
               <a class="dropdown-item"> <i class="fas fa-file-invoice" aria-hidden="true"></i> Agregar Pedido</a>
+              <div role="separator" class="dropdown-divider my-1"></div>
+              <a class="dropdown-item" id="addReferrals"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Referido</a>
             @else
 
             @endif
@@ -187,3 +189,17 @@
     </div>
   </div>
 </nav>
+<!-- Modal Advertisement-->
+<div wire:ignore.self class="modal fade" id="advertisement" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="h6 modal-title">Invitar Amigo</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              @livewire('guests')
+          </div>
+      </div>
+  </div>
+</div>

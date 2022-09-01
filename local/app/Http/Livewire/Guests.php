@@ -62,12 +62,13 @@ class Guests extends Component
             $guests->user_id = auth()->user()->id;
             $guests->guest_name = $this->inputs[$i]['guest_name'];
             $guests->guest_phone = $this->inputs[$i]['guest_phone'];
-            $guests->guest_phone = '0';
 
             $guests->save();
         }
 
+        $this->clearForm();
         $this->dispatchBrowserEvent('closeModal', ['name' => 'advertisement']);
+        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Amigo invitado!']);
 
         $user = User::findOrFail(auth()->user()->id);
 
@@ -79,18 +80,6 @@ class Guests extends Component
         }
     }
 
-    public function skip(){
-        $this->dispatchBrowserEvent('notify', ['type' => 'info', 'message' => 'No podras invitar a tus amigos nuevamente']);
-
-        $user = User::findOrFail(auth()->user()->id);
-
-        $user->advertisement = 'yes';
-        $user->save();
-
-        if($user->first_time != 'yes'){
-            $this->dispatchBrowserEvent('openModal', ['name' => 'first_time']);
-        }
-    }
 
     public function inviteReferrals($data)
     {
@@ -105,6 +94,14 @@ class Guests extends Component
         return ['name' => $guest->guest_name, 'phone' => $guest->guest_phone];
 
 
+    }
+
+    private function clearForm()
+    {
+        $this->fill([
+            'inputs' => collect([['guest_name' => '']]),
+            'inputs' => collect([['guest_phone' => '']]),
+        ]);
     }
 
 
