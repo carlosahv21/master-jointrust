@@ -61,13 +61,16 @@
                                 </div>
                             </th>
                             <th>Referencia del pedido</th>
-                            <th>Usuario Asignado</th>
-                            <th>Fecha de Asignación</th>
+                            <th>Usuario asignado</th>
+                            <th>Dirección de entrega</th>
+                            <th>Cliente</th>
+                            <th>Fecha de asignación</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($orders_domiciliaries as $order)
+
                             <tr>
                                 <td>
                                     <div class="form-check dashboard-check">
@@ -80,6 +83,8 @@
                                     {{  Orders::getReference($order->orders->code) }}
                                 </td>
                                 <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
+                                <th>{{ $order->orders->delivery_address }}</th>
+                                <th>{{ ucfirst($order->orders->user->first_name) }} {{ ucfirst($order->orders->user->last_name) }}</th>
                                 <th>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y')  }}</th>
                                 <th style="width: 5%;">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

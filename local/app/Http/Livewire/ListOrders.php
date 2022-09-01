@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\OrderDomiciliary;
+use DateTime;
 
 class ListOrders extends Component
 {
@@ -17,6 +18,9 @@ class ListOrders extends Component
     public $perPage = '5';
     public $orderBy = 'date_order';
     public $sortBy = 'asc';
+    public $date_ini =  '';
+    public $date_fin =  '';
+    public $dateBetween = 'today';
 
     public $selected = [];
     public $orders_products = [];
@@ -26,6 +30,13 @@ class ListOrders extends Component
     protected $listeners = [
         'refreshParent' => '$refresh'
     ];
+
+    public function __construct()
+    {
+        $this->date_ini = date('Y-m-d');
+        $this->date_fin = date('Y-m-d');
+
+    }
 
     public function selectItem($item, $action)
     {
@@ -103,23 +114,76 @@ class ListOrders extends Component
     }
 
 
-    // public function filterStatus($status)
-    // {
-    //     $this->statusFilter = $status;
-    // }
+    public function changeDate($value)
+    {
+        switch ($value) {
+            case 'today':
+                $this->date_ini = date('Y-m-d');
+                $this->date_fin = date('Y-m-d');
+                break;
+            case 'week':
+                $diaSemana = date("w");
+                $tiempoDeInicioDeSemana = strtotime("-" . $diaSemana . " days");
+                $fechaInicioSemana = date("Y-m-d", $tiempoDeInicioDeSemana);
+                $tiempoDeFinDeSemana = strtotime("+" . $diaSemana . " days", $tiempoDeInicioDeSemana);
+                $fechaFinSemana = date("Y-m-d", $tiempoDeFinDeSemana);
+
+                $this->date_ini = $fechaInicioSemana;
+                $this->date_fin = $fechaFinSemana;
+                break;
+            case 'month':
+                $this->date_ini = date('Y-m-01');
+                
+                $fecha = new DateTime();
+                $fecha->modify('last day of this month');
+
+                $this->date_fin = $fecha->format('Y-m-d');
+                break;
+            case 'last_month':
+                
+                $fecha_ini = new DateTime();
+                $fecha_ini->modify('first day of previous month');
+                $this->date_ini = $fecha_ini->format('Y-m-d');
+
+                $fecha_fin = new DateTime();
+                $fecha_fin->modify('last day of previous month');
+                $this->date_fin = $fecha_fin->format('Y-m-d');
+                break;
+            case 'all':
+                $this->date_ini = '';
+                $this->date_fin = '';
+                break;
+            default:
+                $this->date_ini = date('Y-m-d');
+                $this->date_fin = date('Y-m-d');
+                break;
+        }
+    }
 
     public function render()
     {
+
+        $input = $this->search;
+
         return view('livewire.list-orders', 
             [
-                // 'orders' => Order::search('code', $this->search)->paginate(10),
                 'orders' => Order::when($this->statusFilter, function($query) {
                         if($this->statusFilter !== 'Todos'){
                             $query->where('state',$this->statusFilter);
                         }
                     })
-                    ->search('code', $this->search)
-                    ->orderBy($this->orderBy, $this->sortBy)
+                    ->where(function ($query) use ($input) {
+                        $query->with('user')->whereHas('user', function ($q) use ($input) {
+                            $q->where('first_name', 'like', '%' . $input . '%')
+                                ->orWhere('code', 'like', '%' . $input . '%');
+                        });
+                    })
+                    ->where(function ($query) use ($input) {
+                        if(!empty($this->date_ini) && !empty($this->date_fin)){
+                            $query->whereBetween('date_order', [$this->date_ini, $this->date_fin]);
+                        }
+                    })
+                    ->orderBy('date_order', $this->sortBy)
                     ->paginate($this->perPage),
                 'users' => User::where('role', 'domiciliary')->get()
             ]
