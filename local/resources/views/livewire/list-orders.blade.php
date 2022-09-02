@@ -97,7 +97,7 @@
                     <select wire:model="dateBetween" wire:change="changeDate($event.target.value)" class="form-select mb-0" id="entries" aria-label="Date select">
                         <option value="all"> Todos</option>
                         <option value="today"> Hoy </option>
-                        <option value="week"> Esta samana </option>
+                        <option value="week"> Esta semana </option>
                         <option value="month"> Este mes</option>
                         <option value="last_month"> Mes Anterior</option>
                     </select>
@@ -127,7 +127,9 @@
                             <th>Referencia del pedido</th>
                             <th>Total</th>
                             <th>Fecha de Entrega</th>
-                            <th>Cliente</th>
+                            @if (auth()->user()->role == 'admin')
+                                <th>Cliente</th>
+                            @endif
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -172,33 +174,31 @@
                                     </th>
                                 </tr>
                             @else
-                                @if ($order->user_id == auth()->user()->id)
-                                    <tr>
-                                        <td>
-                                            <div class="form-check dashboard-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="orderCheck1">
-                                                <label class="form-check-label" for="orderCheck1">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {{ $order->code }}
-                                        </td>
-                                        <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
-                                        <th>{{ $order->date_order }}</th>
-                                        <th>{{ $order->state }}</th>
-                                        <th style="width: 5%;">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-h"></i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <li>
-                                                        <a wire:click="selectItem({{ $order->id }}, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a></li>
-                                                </ul>
-                                            </li>
-                                        </th>
-                                    </tr>
-                                @endif
+                                <tr>
+                                    <td>
+                                        <div class="form-check dashboard-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="orderCheck1">
+                                            <label class="form-check-label" for="orderCheck1">
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ $order->code }}
+                                    </td>
+                                    <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
+                                    <th>{{ $order->date_order }}</th>
+                                    <th> <span class="badge text-white" style="background-color:@if ($order->state == 'Pendiente') #FBA918 @elseif ($order->state == 'En Ruta') #11cdef @elseif ($order->state == 'Entregado') #10B981 @elseif ($order->state == 'No Entregado') #E11D48 @endif">{{ $order->state }} </span> </th>
+                                    <th style="width: 5%;">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <li>
+                                                    <a wire:click="selectItem({{ $order->id }}, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a></li>
+                                            </ul>
+                                        </li>
+                                    </th>
+                                </tr>
                             @endif
                             
                         @endforeach

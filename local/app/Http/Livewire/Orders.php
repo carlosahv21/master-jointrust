@@ -16,7 +16,7 @@ class Orders extends Component
 {
     use WithPagination;
     public $search = '';
-    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address;
+    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address, $valueGif, $text,$text2,$text3;
 
     protected $listeners = [
         'refreshParent' => '$refresh',
@@ -27,6 +27,7 @@ class Orders extends Component
     public function resetGitf()
     {
         $this->gift = null;
+        $this->valueGif = null;
     }
 
     public function rules() {
@@ -42,9 +43,27 @@ class Orders extends Component
     ];
 
     public function addProduct($id, $name, $price, $reference)
-    {        
-        Cart::instance('cart')->add($id, $name, 1, $price, ['reference' => $reference])->associate('App\Model\Product');
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Producto agregado a tu pedido!']);
+    {       
+        if(Cart::instance('cart')->count() > 0){ 
+            $rowId = Cart::instance('cart')->getName($name);
+            if($rowId){
+                $product = Cart::instance('cart')->get($rowId);
+                $qty = $product->qty + 1;
+
+                $validate = Product::find($product->id);
+
+                if ($qty > $validate->stock) {
+                    $this->dispatchBrowserEvent('openModal', ['name' => 'validateStock']);    
+                }else{
+                    Cart::instance('cart')->update($rowId,$qty);
+                } 
+            }else{
+                Cart::instance('cart')->add($id, $name, 1, $price, ['reference' => $reference])->associate('App\Model\Product');
+            }           
+        }else{
+            Cart::instance('cart')->add($id, $name, 1, $price, ['reference' => $reference])->associate('App\Model\Product');
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Producto agregado a tu pedido!']);
+        }
     }
 
     public function removeProduct($rowId)
@@ -57,7 +76,19 @@ class Orders extends Component
     {
         $product = Cart::instance('cart')->get($rowId);
         $qty = $product->qty + 1;
-        Cart::instance('cart')->update($rowId,$qty);
+
+        foreach(Cart::instance('cart')->content() as $items ){
+
+            $validate = Product::find($items->id);
+
+            if ($product->name == $validate->name) {
+                if ($qty > $validate->stock) {
+                    $this->dispatchBrowserEvent('openModal', ['name' => 'validateStock']);    
+                }else{
+                    Cart::instance('cart')->update($rowId,$qty);
+                } 
+            }
+        }
     }
 
     public function decreaseQuantity($rowId)
@@ -120,8 +151,6 @@ class Orders extends Component
         $order->user_id = auth()->user()->id;
 
         $order->save();
-        $lastOrder = Order::latest()->first();
-        $this->sendEmail( $lastOrder );
         
         foreach(Cart::instance('cart')->content() as $items ){
             $order->products()->attach($items->id, ['qty' => $items->qty]);
@@ -195,15 +224,8 @@ class Orders extends Component
 		return $code."_".$newSeq;
 	}
 
-    public function sendEmail( $lastOrder )
-    {
-
-        $mailData = [
-            'cart' => Cart::instance('cart'),
-            'model' => $lastOrder
-        ];
-
-        Mail::to( auth()->user()->email )->send( new OrdersMail($mailData) );
+    public function changeGift($value){
+        $this->valueGif = $value;
     }
 
     public function render()

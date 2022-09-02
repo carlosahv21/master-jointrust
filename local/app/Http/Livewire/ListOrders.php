@@ -183,6 +183,11 @@ class ListOrders extends Component
                             $query->whereBetween('date_order', [$this->date_ini, $this->date_fin]);
                         }
                     })
+                    ->where(function ($query) use ($input) {
+                        if(auth()->user()->role != 'admin'){
+                            $query->where('user_id', auth()->user()->id);
+                        }
+                    })
                     ->orderBy('date_order', $this->sortBy)
                     ->paginate($this->perPage),
                 'users' => User::where('role', 'domiciliary')->get()

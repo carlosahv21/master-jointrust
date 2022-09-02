@@ -196,6 +196,27 @@ class Cart
     }
 
     /**
+     * Get a cart item from the cart by name.
+     *
+     * @param string $rowId
+     * @return \Gloudemans\Shoppingcart\CartItem
+     */
+    public function getName($name)
+    {
+        $content = $this->getContent();
+        foreach($content as $items ){
+            if ( $items->name == $name ){
+                $response = $items->rowId;
+                break;
+            }else{
+                $response = false;
+            }
+        }
+
+        return $response;
+    }
+
+    /**
      * Destroy the current cart instance.
      *
      * @return void

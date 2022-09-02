@@ -186,7 +186,7 @@
                                 <br>
                                 <br>
                                 <div class="col-12">
-                                <select wire:ignore.self wire:model="gift" class="form-select" style="display:none;" id="gift" >
+                                <select wire:ignore.self wire:model="gift" wire:change="changeGift($event.target.value)" class="form-select" style="display:none;" id="gift" >
                                         <option>Elegir</option>
                                         @foreach ($gift_sets as $gifts)
                                             <option value="{{ $gifts->value }}">{{ $gifts->name }} - $ {{ number_format( $gifts->value, '0', ',', '.') }}</option>
@@ -227,7 +227,7 @@
                                     </td>
                                     <td class="right">
                                     @if($this->gift)
-                                        <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal() + 15000, '2', ',', '.') }}</strong>
+                                        <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal() + $this->valueGif, '2', ',', '.') }}</strong>
                                     @else
                                         <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->total(), '2', ',', '.') }}</strong>
                                     @endif   
@@ -386,6 +386,21 @@
             <div class="modal-footer">
                 <button wire:click="acceptPopup" type="button" class="btn btn-secondary">Aceptar</button>
                 <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Alert Validate Stock-->
+<div wire:ignore.self class="modal fade" id="validateStock" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la cantidad que estas solicitando es mayor a nuestro stock.
+            </div>
+            <div class="modal-footer">
+                <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>
             </div>
         </div>
     </div>
