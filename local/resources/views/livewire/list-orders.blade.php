@@ -28,46 +28,6 @@
 
     <div class="table-settings mb-4">
         <div class="row justify-content-between align-items-center">
-            <!-- <div class="col-9 col-lg-9 d-md-flex row">
-                <div class="col-4 col-md-2 col-xl-3 ps-md-0">
-                    <div class="input-group me-2 me-lg-3 fmxw-300">
-                        <span class="input-group-text">
-                            <span class="fas fa-search"></span>
-                        </span>
-                        <input wire:model.debounce.350ms="search" type="text" class="form-control" placeholder="Buscar pedido">
-                    </div>
-                </div>
-
-                <div class="col-4 col-md-2 col-xl-1 ps-md-0 d-flex">
-                    <div class="dropdown me-lg-3">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-solspand fa-filter"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end pb-0" style="margin: 0px;">
-                            <a wire:click="filterStatus( 'Pendiente' )" class="dropdown-item d-flex align-items-center fw-bold">Pendientes</a>
-                            <a wire:click="filterStatus( 'En Ruta' )" class="dropdown-item fw-bold" href="#">En Ruta</a>
-                            <a wire:click="filterStatus( 'Entregado' )"  class="dropdown-item fw-bold rounded-bottom" href="#">Entregados</a>
-                            <a wire:click="filterStatus( 'No Entregado' )" class="dropdown-item fw-bold rounded-bottom" href="#">No Entregados</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown me-lg-3">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-solspand fa-filter"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end pb-0" style="margin: 0px;">
-                            <a wire:click="filterStatus( 'Pendiente' )" class="dropdown-item d-flex align-items-center fw-bold">Pendientes</a>
-                            <a wire:click="filterStatus( 'En Ruta' )" class="dropdown-item fw-bold" href="#">En Ruta</a>
-                            <a wire:click="filterStatus( 'Entregado' )"  class="dropdown-item fw-bold rounded-bottom" href="#">Entregados</a>
-                            <a wire:click="filterStatus( 'No Entregado' )" class="dropdown-item fw-bold rounded-bottom" href="#">No Entregados</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 col-md-2 col-xl-2 ps-md-0">
-                    
-                </div>
-            </div> -->
-
             <div class="col-8 col-lg-6 d-flex">
                 <div class="input-group me-2 me-lg-3" style="width: 40%;">
                     <span class="input-group-text"> 

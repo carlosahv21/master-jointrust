@@ -249,8 +249,6 @@
                         document.execCommand("copy");
                         $temp.remove();
                         
-                        $('#'+identifier).attr('disabled',true);
-                        
                         const notyf = new Notyf({
                         position: {
                                 x: 'right',
@@ -277,7 +275,9 @@
                 });
             });
             
-            
+            $('#addReferrals').on('click',function (params) {
+                $('#advertisement').modal('show');
+            });
              
         });
 

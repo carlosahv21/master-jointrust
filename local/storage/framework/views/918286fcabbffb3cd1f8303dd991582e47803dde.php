@@ -60,14 +60,14 @@
                 </div>
             </div> -->
 
-            <div class="col-6 col-lg-4 d-flex">
-                <div class="input-group me-2 me-lg-3">
+            <div class="col-8 col-lg-6 d-flex">
+                <div class="input-group me-2 me-lg-3" style="width: 40%;">
                     <span class="input-group-text"> 
                         <span class="fas fa-search"></span>
                     </span>
                     <input wire:model.debounce.350ms="search" type="text" class="form-control" placeholder="Buscar pedido">
                 </div>
-                <div class="col-2 d-flex me-lg-3">
+                <div class="col-1 d-flex me-lg-3">
                     <select wire:model="perPage" class="form-select mb-0" id="entries" aria-label="Entries per page">
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -76,13 +76,22 @@
                         <option value="100">100</option>
                     </select>
                 </div>
-                <div class="col-4 d-flex">
+                <div class="col-2 d-flex me-lg-3">
                     <select wire:model="statusFilter" class="form-select mb-0" id="entries" aria-label="Entries per page">
                         <option value="Todos"> Todos </option>
                         <option value="Pendiente"> Pendientes </option>
                         <option value="En Ruta"> En Ruta </option>
                         <option value="Entregado"> Entregados </option>
                         <option value="No Entregado"> No Entregados </option>
+                    </select>
+                </div>
+                <div class="col-2 d-flex">
+                    <select wire:model="dateBetween" wire:change="changeDate($event.target.value)" class="form-select mb-0" id="entries" aria-label="Date select">
+                        <option value="all"> Todos</option>
+                        <option value="today"> Hoy </option>
+                        <option value="week"> Esta semana </option>
+                        <option value="month"> Este mes</option>
+                        <option value="last_month"> Mes Anterior</option>
                     </select>
                 </div>
             </div>
@@ -110,6 +119,9 @@
                             <th>Referencia del pedido</th>
                             <th>Total</th>
                             <th>Fecha de Entrega</th>
+                            <?php if(auth()->user()->role == 'admin'): ?>
+                                <th>Cliente</th>
+                            <?php endif; ?>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -131,6 +143,7 @@
                                     </td>
                                     <th> <i class="fas fa-dollar-sign"></i> <?php echo e(number_format($order->total,'2',',','.')); ?></th>
                                     <th><?php echo e($order->date_order); ?></th>
+                                    <th><?php echo e(ucfirst($order->user->first_name)); ?> <?php echo e(ucfirst($order->user->last_name)); ?></th>
                                     <th>
                                         <span class="badge text-white" style="background-color:<?php if($order->state == 'Pendiente'): ?> #FBA918 <?php elseif($order->state == 'En Ruta'): ?> #11cdef <?php elseif($order->state == 'Entregado'): ?> #10B981 <?php elseif($order->state == 'No Entregado'): ?> #E11D48 <?php endif; ?>"><?php echo e($order->state); ?> </span>
                                     </th>
@@ -154,34 +167,32 @@
                                     </th>
                                 </tr>
                             <?php else: ?>
-                                <?php if($order->user_id == auth()->user()->id): ?>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check dashboard-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="orderCheck1">
-                                                <label class="form-check-label" for="orderCheck1">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <?php echo e($order->code); ?>
+                                <tr>
+                                    <td>
+                                        <div class="form-check dashboard-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="orderCheck1">
+                                            <label class="form-check-label" for="orderCheck1">
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php echo e($order->code); ?>
 
-                                        </td>
-                                        <th> <i class="fas fa-dollar-sign"></i> <?php echo e(number_format($order->total,'2',',','.')); ?></th>
-                                        <th><?php echo e($order->date_order); ?></th>
-                                        <th><?php echo e($order->state); ?></th>
-                                        <th style="width: 5%;">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-h"></i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <li>
-                                                        <a wire:click="selectItem(<?php echo e($order->id); ?>, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a></li>
-                                                </ul>
-                                            </li>
-                                        </th>
-                                    </tr>
-                                <?php endif; ?>
+                                    </td>
+                                    <th> <i class="fas fa-dollar-sign"></i> <?php echo e(number_format($order->total,'2',',','.')); ?></th>
+                                    <th><?php echo e($order->date_order); ?></th>
+                                    <th> <span class="badge text-white" style="background-color:<?php if($order->state == 'Pendiente'): ?> #FBA918 <?php elseif($order->state == 'En Ruta'): ?> #11cdef <?php elseif($order->state == 'Entregado'): ?> #10B981 <?php elseif($order->state == 'No Entregado'): ?> #E11D48 <?php endif; ?>"><?php echo e($order->state); ?> </span> </th>
+                                    <th style="width: 5%;">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <li>
+                                                    <a wire:click="selectItem(<?php echo e($order->id); ?>, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a></li>
+                                            </ul>
+                                        </li>
+                                    </th>
+                                </tr>
                             <?php endif; ?>
                             
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

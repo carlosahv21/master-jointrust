@@ -27,6 +27,8 @@
               <a class="dropdown-item"> <i class="fas fa-box" aria-hidden="true"></i> Agregar Producto</a>
             <?php elseif(auth()->user()->role == 'client'): ?>
               <a class="dropdown-item"> <i class="fas fa-file-invoice" aria-hidden="true"></i> Agregar Pedido</a>
+              <div role="separator" class="dropdown-divider my-1"></div>
+              <a class="dropdown-item" id="addReferrals"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Referido</a>
             <?php else: ?>
 
             <?php endif; ?>
@@ -62,15 +64,15 @@
               <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('logout', [])->html();
-} elseif ($_instance->childHasBeenRendered('ALdiF7d')) {
-    $componentId = $_instance->getRenderedChildComponentId('ALdiF7d');
-    $componentTag = $_instance->getRenderedChildComponentTagName('ALdiF7d');
+} elseif ($_instance->childHasBeenRendered('gzC6scj')) {
+    $componentId = $_instance->getRenderedChildComponentId('gzC6scj');
+    $componentTag = $_instance->getRenderedChildComponentTagName('gzC6scj');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('ALdiF7d');
+    $_instance->preserveRenderedChild('gzC6scj');
 } else {
     $response = \Livewire\Livewire::mount('logout', []);
     $html = $response->html();
-    $_instance->logRenderedChild('ALdiF7d', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('gzC6scj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?></a>
@@ -79,4 +81,32 @@ echo $html;
       </ul>
     </div>
   </div>
-</nav><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/layouts/topbar.blade.php ENDPATH**/ ?>
+</nav>
+<!-- Modal Advertisement-->
+<div wire:ignore.self class="modal fade" id="advertisement" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="h6 modal-title">Invitar Amigo</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <?php
+if (! isset($_instance)) {
+    $html = \Livewire\Livewire::mount('guests')->html();
+} elseif ($_instance->childHasBeenRendered('2PcHeQN')) {
+    $componentId = $_instance->getRenderedChildComponentId('2PcHeQN');
+    $componentTag = $_instance->getRenderedChildComponentTagName('2PcHeQN');
+    $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('2PcHeQN');
+} else {
+    $response = \Livewire\Livewire::mount('guests');
+    $html = $response->html();
+    $_instance->logRenderedChild('2PcHeQN', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+}
+echo $html;
+?>
+          </div>
+      </div>
+  </div>
+</div><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/layouts/topbar.blade.php ENDPATH**/ ?>
