@@ -96,15 +96,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-end py-4">
-                {{ $gift_sets->links()}}
-            </div>
         @else
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay kits de regalo para mostrar </span>
             </div>
         @endif
     </div>
+    @if( $gift_sets->links())
+        <div class="d-flex justify-content-end py-4">
+            {{ $gift_sets->links() }}
+        </div>
+    @endif
+
 
       <!-- Modal Add-->
       <div wire:ignore.self class="modal fade" id="createGiftSet" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">

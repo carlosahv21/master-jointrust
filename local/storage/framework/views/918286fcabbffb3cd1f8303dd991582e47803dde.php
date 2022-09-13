@@ -1,6 +1,7 @@
 <?php $__env->startSection('title','Pedidos'); ?>
 
 <div>
+    <input type="hidden" id="text_copy">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -20,46 +21,6 @@
 
     <div class="table-settings mb-4">
         <div class="row justify-content-between align-items-center">
-            <!-- <div class="col-9 col-lg-9 d-md-flex row">
-                <div class="col-4 col-md-2 col-xl-3 ps-md-0">
-                    <div class="input-group me-2 me-lg-3 fmxw-300">
-                        <span class="input-group-text">
-                            <span class="fas fa-search"></span>
-                        </span>
-                        <input wire:model.debounce.350ms="search" type="text" class="form-control" placeholder="Buscar pedido">
-                    </div>
-                </div>
-
-                <div class="col-4 col-md-2 col-xl-1 ps-md-0 d-flex">
-                    <div class="dropdown me-lg-3">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-solspand fa-filter"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end pb-0" style="margin: 0px;">
-                            <a wire:click="filterStatus( 'Pendiente' )" class="dropdown-item d-flex align-items-center fw-bold">Pendientes</a>
-                            <a wire:click="filterStatus( 'En Ruta' )" class="dropdown-item fw-bold" href="#">En Ruta</a>
-                            <a wire:click="filterStatus( 'Entregado' )"  class="dropdown-item fw-bold rounded-bottom" href="#">Entregados</a>
-                            <a wire:click="filterStatus( 'No Entregado' )" class="dropdown-item fw-bold rounded-bottom" href="#">No Entregados</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown me-lg-3">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-solspand fa-filter"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end pb-0" style="margin: 0px;">
-                            <a wire:click="filterStatus( 'Pendiente' )" class="dropdown-item d-flex align-items-center fw-bold">Pendientes</a>
-                            <a wire:click="filterStatus( 'En Ruta' )" class="dropdown-item fw-bold" href="#">En Ruta</a>
-                            <a wire:click="filterStatus( 'Entregado' )"  class="dropdown-item fw-bold rounded-bottom" href="#">Entregados</a>
-                            <a wire:click="filterStatus( 'No Entregado' )" class="dropdown-item fw-bold rounded-bottom" href="#">No Entregados</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 col-md-2 col-xl-2 ps-md-0">
-                    
-                </div>
-            </div> -->
-
             <div class="col-8 col-lg-6 d-flex">
                 <div class="input-group me-2 me-lg-3" style="width: 40%;">
                     <span class="input-group-text"> 
@@ -154,14 +115,15 @@
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <li>
                                                     <a wire:click="selectItem(<?php echo e($order->id); ?>, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
-                                                <?php if($order->role != 'admin'): ?>
                                                     <li>
-                                                        <button wire:click="selectItem(<?php echo e($order->id); ?>, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500 text-info"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
+                                                        <button wire:click="selectItem(<?php echo e($order->id); ?>, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item btn-outline-gray-500 confirmation" data-id="<?php echo e($order->id); ?>"><i class="fas fa-sms"></i> Confirmar pedido</button>
                                                     </li>
                                                     <li>
                                                         <button wire:click="selectItem(<?php echo e($order->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
                                                     </li>
-                                                <?php endif; ?>
                                             </ul>
                                         </li>
                                     </th>
@@ -199,16 +161,19 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-end py-4">
-                <?php echo e($orders->links()); ?>
-
-            </div>
+            
         <?php else: ?>
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay pedidos para mostrar </span>
             </div>
         <?php endif; ?>
     </div>
+    <?php if($orders->links()): ?>
+        <div class="d-flex justify-content-end py-4">
+            <?php echo e($orders->links()); ?>
+
+        </div>
+    <?php endif; ?>
     <!-- Modal Add-->
     <div wire:ignore.self class="modal fade" id="createOrder" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

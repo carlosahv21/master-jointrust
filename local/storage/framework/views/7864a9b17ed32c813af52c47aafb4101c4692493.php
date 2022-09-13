@@ -1,4 +1,4 @@
-@section('title','Producto')
+<?php $__env->startSection('title','Producto'); ?>
 
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -16,13 +16,8 @@
             </nav>
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            {{-- <button class="btn btn-secondary me-2 dropdown-toggle" data-bs-toggle="modal" data-bs-target="#createProduct">
-                <span class="fas fa-plus"></span> Crear Productos
-            </button> --}}
-            {{-- <div class="btn-group ms-2 ms-lg-3">
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
-            </div> --}}
+            
+            
         </div>
     </div>
 
@@ -36,15 +31,7 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar productos">
                 </div>
             </div>
-            {{-- <div class="d-flex col-3 col-lg-3">
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Bulk Action</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete Product</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div> --}}
+            
             <div class="col-3 col-lg-3 d-flex justify-content-end">
                 <div class="dropdown px-2">
                     <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +50,7 @@
         </div>
     </div>
     <div class="card shadow border-0 table-wrapper table-responsive">
-        @if ($products->count())
+        <?php if($products->count()): ?>
             <div wire:loading.class="opacity-50">
                 <table class="table product-table align-items-center">
                     <thead class="thead-dark">
@@ -84,53 +71,54 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($products as $product)
+                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td>
                                     <div class="form-check dashboard-check">
-                                        <input wire:model="selected" class="form-check-input" type="checkbox" value="{{ $product->id }}">
+                                        <input wire:model="selected" class="form-check-input" type="checkbox" value="<?php echo e($product->id); ?>">
                                         <label class="form-check-label" for="ProductCheck1">
                                         </label>
                                     </div>
                                 </td>
-                                <th>{{ strtoupper($product->name) }}</th>
-                                <th>{{ $product->reference }}</th>
-                                <th>{{ $product->presentation }}</th>
-                                <th> <i class="fas fa-dollar-sign"></i> {{ number_format($product->price,'2',',','.')  }}</th>
-                                <th>{{ $product->stock }}</th>
+                                <th><?php echo e(strtoupper($product->name)); ?></th>
+                                <th><?php echo e($product->reference); ?></th>
+                                <th><?php echo e($product->presentation); ?></th>
+                                <th> <i class="fas fa-dollar-sign"></i> <?php echo e(number_format($product->price,'2',',','.')); ?></th>
+                                <th><?php echo e($product->stock); ?></th>
                                 <th style="width: 5%;">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a wire:click="selectItem({{ $product->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
-                                        @if ($product->role != 'admin')
-                                            @if ($product->favorite)
-                                                <li ><button wire:click="removeFavorite({{ $product->id }})" class="dropdown-item btn-outline-gray-500"><i class="far fa-star"></i> Remover favorito</button></li>
-                                            @else
-                                                <li ><button wire:click="addFavorite({{ $product->id }})" class="dropdown-item btn-outline-gray-500"><i class="fas fa-star"></i> Agregar favorito</button></li>
-                                            @endif
-                                            <li ><button wire:click="selectItem({{ $product->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
-                                        @endif
+                                        <li><a wire:click="selectItem(<?php echo e($product->id); ?>, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
+                                        <?php if($product->role != 'admin'): ?>
+                                            <?php if($product->favorite): ?>
+                                                <li ><button wire:click="removeFavorite(<?php echo e($product->id); ?>)" class="dropdown-item btn-outline-gray-500"><i class="far fa-star"></i> Remover favorito</button></li>
+                                            <?php else: ?>
+                                                <li ><button wire:click="addFavorite(<?php echo e($product->id); ?>)" class="dropdown-item btn-outline-gray-500"><i class="fas fa-star"></i> Agregar favorito</button></li>
+                                            <?php endif; ?>
+                                            <li ><button wire:click="selectItem(<?php echo e($product->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
+                                        <?php endif; ?>
                                         </ul>
                                     </li>
                                 </th>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
-        @else
+        <?php else: ?>
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay productos para mostrar </span>
             </div>
-        @endif
+        <?php endif; ?>
     </div>
-    @if($products->links())
+    <?php if($products->links()): ?>
         <div class="d-flex justify-content-end py-4 px-4">
-            {{ $products->links()}}
+            <?php echo e($products->links()); ?>
+
         </div>
-    @endif
+    <?php endif; ?>
     <!-- Modal Add-->
     <div wire:ignore.self class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -140,7 +128,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @livewire('product-form')
+                    <?php
+if (! isset($_instance)) {
+    $html = \Livewire\Livewire::mount('product-form')->html();
+} elseif ($_instance->childHasBeenRendered('l2519592853-0')) {
+    $componentId = $_instance->getRenderedChildComponentId('l2519592853-0');
+    $componentTag = $_instance->getRenderedChildComponentTagName('l2519592853-0');
+    $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('l2519592853-0');
+} else {
+    $response = \Livewire\Livewire::mount('product-form');
+    $html = $response->html();
+    $_instance->logRenderedChild('l2519592853-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+}
+echo $html;
+?>
                 </div>
             </div>
         </div>
@@ -172,7 +174,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Deseas eliminar {{ $countProduct }} registros?
+                    Deseas eliminar <?php echo e($countProduct); ?> registros?
                 </div>
                 <div class="modal-footer">
                     <button wire:click="massiveDelete" class="btn btn-secondary">Acepto</button>
@@ -181,4 +183,4 @@
             </div>
         </div>
     </div>
-</div>
+</div><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/livewire/products.blade.php ENDPATH**/ ?>

@@ -57,17 +57,30 @@ Route::get('/500', Err500::class)->name('500');
 Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
 
 Route::middleware('auth')->group(function () {
+    // Rutas de Usuario
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('/profile-example', ProfileExample::class)->name('profile-example');
     Route::get('/users', Users::class)->name('users');
 
+    // Rutas de Invitados
     Route::get('/referals/{id}', [Guests::class, 'show']);
     Route::get('/invite/{id}', [Guests::class, 'inviteReferrals'])->name('invite');
-
+    
+    // Rutas de Productos
     Route::get('/list-products', Products::class)->name('products');
-    // Route::get('/orders', Orders::class)->name('orders');
+
+    // Rutas de Ordenes
     Route::get('/orders', Orders::class)->name('orders');
+    Route::get('markAsRead', function(){
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('markAsRead');
+    Route::get('/view-order/{id}/{notification_id?}', [Orders::class, 'show']);
+    Route::get('/confirmation/{id}', [Orders::class, 'confirmation'])->name('confirmation');
+
     Route::get('/list-order', ListOrders::class)->name('list-order');
+
+
     Route::get('/list-domiciliary', ListDomiciliary::class)->name('list-domiciliary');
     Route::get('/gift-sets', GiftSets::class)->name('gift-sets');
 

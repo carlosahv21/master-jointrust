@@ -97,16 +97,19 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-end py-4">
-                <?php echo e($gift_sets->links()); ?>
-
-            </div>
         <?php else: ?>
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay kits de regalo para mostrar </span>
             </div>
         <?php endif; ?>
     </div>
+    <?php if( $gift_sets->links()): ?>
+        <div class="d-flex justify-content-end py-4">
+            <?php echo e($gift_sets->links()); ?>
+
+        </div>
+    <?php endif; ?>
+
 
       <!-- Modal Add-->
       <div wire:ignore.self class="modal fade" id="createGiftSet" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">

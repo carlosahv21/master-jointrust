@@ -1,6 +1,7 @@
 @section('title','Pedidos')
 
 <div>
+    <input type="hidden" id="text_copy">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -121,14 +122,15 @@
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <li>
                                                     <a wire:click="selectItem({{ $order->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
-                                                @if ($order->role != 'admin')
                                                     <li>
-                                                        <button wire:click="selectItem({{ $order->id }}, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500 text-info"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
+                                                        <button wire:click="selectItem({{ $order->id }}, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item btn-outline-gray-500 confirmation" data-id="{{ $order->id }}"><i class="fas fa-sms"></i> Confirmar pedido</button>
                                                     </li>
                                                     <li>
                                                         <button wire:click="selectItem({{ $order->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
                                                     </li>
-                                                @endif
                                             </ul>
                                         </li>
                                     </th>
@@ -165,15 +167,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-end py-4">
-                {{ $orders->links()}}
-            </div>
+            
         @else
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay pedidos para mostrar </span>
             </div>
         @endif
     </div>
+    @if($orders->links())
+        <div class="d-flex justify-content-end py-4">
+            {{ $orders->links()}}
+        </div>
+    @endif
     <!-- Modal Add-->
     <div wire:ignore.self class="modal fade" id="createOrder" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

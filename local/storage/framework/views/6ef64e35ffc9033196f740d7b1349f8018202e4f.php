@@ -1,4 +1,4 @@
-@section('title','Domiciliarios')
+<?php $__env->startSection('title','Domiciliarios'); ?>
 
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -15,15 +15,7 @@
                 </ol>
             </nav>
         </div>
-        {{-- <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-secondary me-2 dropdown-toggle" data-bs-toggle="modal" data-bs-target="#createOrder">
-                <span class="fas fa-plus"></span> Crear Pedidos
-            </button>
-            <div class="btn-group ms-2 ms-lg-3">
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
-            </div>
-        </div> --}}
+        
     </div>
 
     <div class="table-settings mb-4">
@@ -36,19 +28,11 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar domiciliado">
                 </div>
             </div>
-            {{-- <div class="col-3 col-lg-3 d-md-flex">
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Bulk Action</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete Order</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div> --}}
+            
         </div>
     </div>
     <div class="card shadow border-0 table-wrapper table-responsive">
-        @if ($orders_domiciliaries->count())
+        <?php if($orders_domiciliaries->count()): ?>
             <div wire:loading.class="opacity-50">
                 <table class="table order-table align-items-center">
                     <thead class="thead-dark">
@@ -69,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders_domiciliaries as $order)
+                        <?php $__currentLoopData = $orders_domiciliaries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <tr>
                                 <td>
@@ -80,41 +64,43 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{  Orders::getReference($order->orders->code) }}
+                                    <?php echo e(Orders::getReference($order->orders->code)); ?>
+
                                 </td>
-                                <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
-                                <th>{{ $order->orders->delivery_address }}</th>
-                                <th>{{ ucfirst($order->orders->user->first_name) }} {{ ucfirst($order->orders->user->last_name) }}</th>
-                                <th>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y')  }}</th>
+                                <th><?php echo e(ucfirst($order->user->first_name)); ?> <?php echo e(ucfirst($order->user->last_name)); ?></th>
+                                <th><?php echo e($order->orders->delivery_address); ?></th>
+                                <th><?php echo e(ucfirst($order->orders->user->first_name)); ?> <?php echo e(ucfirst($order->orders->user->last_name)); ?></th>
+                                <th><?php echo e(\Carbon\Carbon::parse($order->created_at)->format('d-m-Y')); ?></th>
                                 <th style="width: 5%;">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            @if ($order->role != 'admin')
+                                            <?php if($order->role != 'admin'): ?>
                                                 <li>
-                                                    <button wire:click="selectItem({{ $order->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
+                                                    <button wire:click="selectItem(<?php echo e($order->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
                                                 </li>
-                                            @endif
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                 </th>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
-        @else
+        <?php else: ?>
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay domiciliarios para mostrar </span>
             </div>
-        @endif
+        <?php endif; ?>
     </div>
-    @if($orders_domiciliaries->links())
+    <?php if($orders_domiciliaries->links()): ?>
         <div class="d-flex justify-content-end py-4">
-            {{ $orders_domiciliaries->links()}}
+            <?php echo e($orders_domiciliaries->links()); ?>
+
         </div>
-    @endif
+    <?php endif; ?>
      
     <!-- Modal Delete-->
     <div wire:ignore.self class="modal fade" id="deleteDomiciliary" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
@@ -135,4 +121,4 @@
         </div>
     </div>
     
-</div>
+</div><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/livewire/list-domiciliary.blade.php ENDPATH**/ ?>

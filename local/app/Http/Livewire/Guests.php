@@ -87,9 +87,7 @@ class Guests extends Component
         $guest = Guest::findOrFail($data);
         $guest->guest = 1;
 
-        $guest->save();
-        
-        $this->dispatchBrowserEvent('notify', ['type' => 'info', 'message' => 'No podras invitar a tus amigos nuevamente']);
+        $guest->save(); 
 
         return ['name' => $guest->guest_name, 'phone' => $guest->guest_phone];
 

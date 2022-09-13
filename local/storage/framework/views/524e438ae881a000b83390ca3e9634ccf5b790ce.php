@@ -1,4 +1,4 @@
-@section('title','Usuario')
+<?php $__env->startSection('title','Usuario'); ?>
 
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -15,15 +15,7 @@
                 </ol>
             </nav>
         </div>
-        {{-- <div class="btn-toolbar mb-2 mb-md-0">
-            <button class="btn btn-secondary me-2 dropdown-toggle" data-bs-toggle="modal" data-bs-target="#createUser">
-                <span class="fas fa-plus"></span> Crear Usuarios
-            </button>
-            <div class="btn-group ms-2 ms-lg-3">
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
-            </div>
-        </div> --}}
+        
     </div>
 
     <div class="table-settings mb-4">
@@ -36,15 +28,7 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar usuario">
                 </div>
             </div>
-            {{-- <div class="col-3 col-lg-3 d-md-flex">
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Bulk Action</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div> --}}
+            
             <div class="col-3 col-lg-3 d-flex justify-content-end">
                 <div class="dropdown px-2">
                     <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +47,7 @@
         </div>
     </div>
     <div class="card shadow border-0 table-wrapper table-responsive">
-        @if ($users->count())
+        <?php if($users->count()): ?>
             <div wire:loading.class="opacity-50">
                 <table class="table user-table align-items-center">
                     <thead class="thead-dark">
@@ -82,7 +66,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td>
                                     <div class="form-check dashboard-check">
@@ -93,59 +77,74 @@
                                 </td>
                                 <td>
                                     <a href="#" class="d-flex align-items-center">
-                                        @if($user->user_image)
-                                        <img src="{{ Storage::disk('images_profile')->url($user->user_image) }}" class="avatar rounded-circle me-3" alt="{{  $user->first_name ." ". $user->last_name}}">
-                                        @else
+                                        <?php if($user->user_image): ?>
+                                        <img src="<?php echo e(Storage::disk('images_profile')->url($user->user_image)); ?>" class="avatar rounded-circle me-3" alt="<?php echo e($user->first_name ." ". $user->last_name); ?>">
+                                        <?php else: ?>
                                         <img src="../assets/img/team/profile-picture-1.jpg" class="avatar rounded-circle me-3"
                                             alt="Avatar">
-                                        @endif
+                                        <?php endif; ?>
                                         <div class="d-block">
-                                            <span class="fw-bold">{{ $user->first_name . " ". $user->last_name }}</span>
-                                            <div class="small text-gray">{{ $user->email }}</div>
+                                            <span class="fw-bold"><?php echo e($user->first_name . " ". $user->last_name); ?></span>
+                                            <div class="small text-gray"><?php echo e($user->email); ?></div>
                                         </div>
                                     </a>
                                 </td>
-                                <th>{{ $user->role }}</th>
-                                <th>{{ $user->address }}</th>
+                                <th><?php echo e($user->role); ?></th>
+                                <th><?php echo e($user->address); ?></th>
                                 <th style="width: 5%;">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a wire:click="selectItem({{ $user->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
-                                        @if ($user->role != 'admin')
-                                            <li><button wire:click="selectItem({{ $user->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
-                                            <li><a href="/referals/{{$user->id}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
-                                        @endif
+                                        <li><a wire:click="selectItem(<?php echo e($user->id); ?>, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
+                                        <?php if($user->role != 'admin'): ?>
+                                            <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
+                                            <li><a href="/referals/<?php echo e($user->id); ?>" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
+                                        <?php endif; ?>
                                         </ul>
                                     </li>
                                 </th>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
-        @else
+        <?php else: ?>
             <div class="d-flex justify-content-center py-6">
                 <span class="text-gray-500"><i class="fas fa-archive"></i>  No hay usuarios para mostrar </span>
             </div>
-        @endif
+        <?php endif; ?>
     </div>
-    @if($users->links())
+    <?php if($users->links()): ?>
         <div class="d-flex justify-content-end py-4">
-            {{ $users->links()}}
+            <?php echo e($users->links()); ?>
+
         </div>
-    @endif
+    <?php endif; ?>
     <!-- Modal Add-->
     <div wire:ignore.self class="modal fade" id="createUser" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="h6 modal-title">{{$title_modal}}</h2>
+                    <h2 class="h6 modal-title"><?php echo e($title_modal); ?></h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @livewire('user-form')
+                    <?php
+if (! isset($_instance)) {
+    $html = \Livewire\Livewire::mount('user-form')->html();
+} elseif ($_instance->childHasBeenRendered('l1532092529-0')) {
+    $componentId = $_instance->getRenderedChildComponentId('l1532092529-0');
+    $componentTag = $_instance->getRenderedChildComponentTagName('l1532092529-0');
+    $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('l1532092529-0');
+} else {
+    $response = \Livewire\Livewire::mount('user-form');
+    $html = $response->html();
+    $_instance->logRenderedChild('l1532092529-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+}
+echo $html;
+?>
                 </div>
             </div>
         </div>
@@ -205,21 +204,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->referrals as $referrals)
+                        <?php $__currentLoopData = $this->referrals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $referrals): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th>{{ $referrals->guest_name }}</th>
-                                <th>{{ $referrals->guest_phone }}</th>
-                                @if ($referrals->guest)
+                                <th><?php echo e($referrals->guest_name); ?></th>
+                                <th><?php echo e($referrals->guest_phone); ?></th>
+                                <?php if($referrals->guest): ?>
                                     <th> 
                                         <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0">
                                             <i class="fas fa-user-check"></i>
                                         </div>    
                                     </th>
-                                @else
-                                    <th> <button wire:click.ignore="selectItem({{ $referrals->id }}, 'inviteReferrals')" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
-                                @endif
+                                <?php else: ?>
+                                    <th> <button wire:click.ignore="selectItem(<?php echo e($referrals->id); ?>, 'inviteReferrals')" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
+                                <?php endif; ?>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
                 </div>
@@ -232,4 +231,4 @@
     </div>
 </div>
 
-<script src="{{asset('public/assets/js/users.js') }}"></script>
+<script src="<?php echo e(asset('public/assets/js/users.js')); ?>"></script><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/livewire/users.blade.php ENDPATH**/ ?>

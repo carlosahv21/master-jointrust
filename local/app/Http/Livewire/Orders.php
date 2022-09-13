@@ -4,19 +4,22 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Order;
-use Livewire\WithPagination;
+use App\Models\User;
 use App\Models\Product;
-use App\Mail\OrdersMail;
-use Illuminate\Support\Facades\Mail;
+
+use Livewire\WithPagination;
+
 use Cart;
 use Carbon\Carbon;
+
+use App\Notifications\NotificarPedido;
 use Illuminate\Support\Facades\DB;
 
 class Orders extends Component
 {
     use WithPagination;
     public $search = '';
-    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address, $valueGif, $text,$text2,$text3;
+    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address, $valueGif;
 
     protected $listeners = [
         'refreshParent' => '$refresh',
@@ -151,7 +154,11 @@ class Orders extends Component
         $order->user_id = auth()->user()->id;
 
         $order->save();
-        
+        User::where('role', '=', 'admin')
+              ->each(function(User $user) use ($order) {
+                    $user->notify(new NotificarPedido($order));
+        });
+
         foreach(Cart::instance('cart')->content() as $items ){
             $order->products()->attach($items->id, ['qty' => $items->qty]);
         }
@@ -166,19 +173,64 @@ class Orders extends Component
             $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Tu pedido fue creado existosamente!']);
         }
 
+
         $this->clearForm();
         $this->dispatchBrowserEvent('goListOrder');
     }
 
     private function clearForm()
     {
-
         $this->comment = null;
         $this->radioButtom = null;
         $this->date_order = null;
         $this->gift_check = null;
         $this->gift = null;
         $this->delivery_address = null;
+    }
+
+    public function show($id, $notification_id = false)
+    {
+        auth()->user()->unreadNotifications
+                ->when($notification_id, function($query) use ($notification_id){
+                    return $query->where('id', $notification_id);
+                })->markAsRead();
+
+        $id = decrypt($id);
+
+        return view('livewire.show-order',$this->formatData($id));
+    }
+
+    public function confirmation($id){
+        $data = $this->formatData($id);
+
+        $text = "https://api.whatsapp.com/send/?phone=+57".$data['user']['phone']."&text=Sr.(a) *".$data['user']['first_name']." ".$data['user']['last_name']."*, cordial saludo.%0D%0ASu pedido queda programado durante la tarde de hoy entre 3 y 9 p.m, a la siguiente direcci%C3%B3n *(".$data['order']['delivery_address'].")*: %0D%0A%0D%0A";
+
+        foreach ($data['order_data'] as $key => $value) {
+            $text.= $value->qty." ".strtoupper($value->name)." ".$value->reference." - $".$value->qty*$value->price."%0D%0A";
+        }
+
+        $text.= "Domicilio - $4000 %0D%0A%0D%0A*Total a pagar: $38500 - CONFIRMAR LA FORMA DE PAGO.*%0D%0A%0D%0A_*POR FAVOR VERIFICAR LA INFORMACI%C3%93N. EN CASO QUE LA DIRECCI%C3%93N NO CORRESPONDA Y NO INFORME DICHO CAMBIO EN LOS SIGUIENTES 20 MINUTOS DE LLEGADO ESTE MENSAJE%2C EL DOMICILIO SER%C3%81 COBRADO ADICIONAL.*_ ¡Feliz día!";
+        
+        return str_replace("#","%23",$text);
+    }
+
+    public function formatData($id)
+    {
+        $order = Order::find($id);
+        $order_data = DB::table('products')
+            ->join('order_product', 'products.id', '=', 'order_product.product_id')
+            ->join('orders', 'order_product.order_id', '=', 'orders.id')
+            ->select('products.*', 'order_product.*')
+            ->where('orders.id', '=', $id)
+            ->get();
+        
+        $user = User::find($order['user_id']);
+
+        $order = collect($order)->toArray();
+        $order_data = collect($order_data)->toArray();
+        $user = collect($user)->toArray();
+
+        return ['order' => $order, 'order_data' => $order_data, 'user' => $user];
     }
 
     public function acceptPopup(){
