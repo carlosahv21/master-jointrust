@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Address;
 
 use Livewire\WithPagination;
 
@@ -13,13 +14,16 @@ use Cart;
 use Carbon\Carbon;
 
 use App\Notifications\NotificarPedido;
+
 use Illuminate\Support\Facades\DB;
 
 class Orders extends Component
 {
     use WithPagination;
     public $search = '';
-    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address, $valueGif;
+    public $comment, $radioButtom, $date_order, $gift_check, $gift, $delivery_address, $valueGif, $showAddress, $valueShipping;
+
+    public $addresses = [];
 
     protected $listeners = [
         'refreshParent' => '$refresh',
@@ -239,7 +243,8 @@ class Orders extends Component
         $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Tu pedido fue creado existosamente!']);
     }
 
-    static public function getReference() {
+    static public function getReference() 
+    {
 		// La nomenclatura sera join_order_0001
 
         $code_order = Order::select('id')->latest('id')->first();
@@ -275,6 +280,29 @@ class Orders extends Component
 
 		return $code."_".$newSeq;
 	}
+
+    public function showShipping()
+    {
+        $this->addresses = Address::where('user_id', '=', auth()->user()->id)
+            ->get();
+    }
+
+    public function selectShipping()
+    {
+        $data = DB::table('addresses')
+            ->leftjoin('shippings', 'addresses.shipping_id', '=', 'shippings.id')
+            ->select('addresses.*', 'shippings.*')
+            ->where('addresses.id', '=', $this->delivery_address)
+            ->get();
+
+        $_data = $data[0];
+
+        if(empty($_data->shipping_id)){
+            $this->dispatchBrowserEvent('openModal', ['name' => 'alertShipping']);
+        }
+        $this->showAddress = $_data->address;
+        $this->valueShipping = $_data->value;
+    }
 
     public function changeGift($value){
         $this->valueGif = $value;

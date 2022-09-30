@@ -92,9 +92,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" class="d-flex align-items-center">
+                                    <a class="d-flex align-items-center">
                                         @if($user->user_image)
-                                        <img src="{{ Storage::disk('images_profile')->url($user->user_image) }}" class="avatar rounded-circle me-3" alt="{{  $user->first_name ." ". $user->last_name}}">
+                                        <img src="{{ asset('local/storage/app/images_profile/'.$user->user_image) }}" class="avatar rounded-circle me-3" alt="{{  $user->first_name ." ". $user->last_name}}">
                                         @else
                                         <img src="../assets/img/team/profile-picture-1.jpg" class="avatar rounded-circle me-3"
                                             alt="Avatar">
@@ -114,8 +114,9 @@
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a wire:click="selectItem({{ $user->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
                                         @if ($user->role != 'admin')
-                                            <li><button wire:click="selectItem({{ $user->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                             <li><a href="/referals/{{$user->id}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
+                                            <li><button wire:click="selectItem({{ $user->id }}, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li></li>
+                                            <li><button wire:click="selectItem({{ $user->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                         @endif
                                         </ul>
                                     </li>
@@ -187,37 +188,36 @@
         </div>
     </div>
     <!-- Modal See Referrals-->
-    <div wire:ignore.self class="modal fade" id="seeReferrals" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div wire:ignore.self class="modal fade" id="seeAddress" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="h6 modal-title">Ver Referidos</h2>
+                    <h2 class="h6 modal-title">Direcciones de entrega</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                 <table class="table user-table align-items-center">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Telef&oacute;no</th>
-                            <th>Invitaci&oacute;n</th>
-
+                            <th>Direccion</th>
+                            <th>Domicilio</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->referrals as $referrals)
+                        @csrf
+                        @foreach ($this->addresses as $address)
                             <tr>
-                                <th>{{ $referrals->guest_name }}</th>
-                                <th>{{ $referrals->guest_phone }}</th>
-                                @if ($referrals->guest)
-                                    <th> 
-                                        <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0">
-                                            <i class="fas fa-user-check"></i>
-                                        </div>    
-                                    </th>
-                                @else
-                                    <th> <button wire:click.ignore="selectItem({{ $referrals->id }}, 'inviteReferrals')" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
-                                @endif
+                                <th>
+                                    {{ $address->address}}
+                                </th>
+                                <th>
+                                    <select class="form-control" onchange="addShiping(this, {{ $address->id }} )">
+                                        <option value="">Elegir Zona</option>
+                                        @foreach ($this->shippings as $shipping)
+                                            <option @if($shipping->id == $address->shipping_id) selected="selected" @endif value="{{ $shipping->id }}">{{ $shipping->zone }} </option>
+                                        @endforeach
+                                    </select>
+                                </th>
                             </tr>
                         @endforeach
                     </tbody>

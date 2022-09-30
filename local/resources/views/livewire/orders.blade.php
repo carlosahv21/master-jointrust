@@ -162,13 +162,9 @@
                         <div class="col-6">
                             <label for="inputDeliveryAddress">Dirección de entrega</label>
                         </div>
-                        <div class="col-6">
-                            <input wire:model.defer="delivery_address" type="text" class="form-control" placeholder="Direccion completa que incluya nombre edificio o conjunto" id="inputDeliveryAddress">
-                            @if ($errors->has('delivery_address'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('delivery_address') }}
-                                </div>
-                            @endif
+                        <div class="col-6 text-center" >
+                            <input wire:model="showAddress" type="text" class="form-control" disabled="disabled" placeholder="Aun no has seleccionado una direccion" id="inputDeliveryAddress">
+                            <button wire:click="showShipping" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-default">Selecciona tu direccion de entrega</button>
                         </div>
                     </div>
                     <div class="mt-4 row">
@@ -221,16 +217,44 @@
                                         </td>
                                     </tr>
                                 @endif
+                                @if($this->valueShipping)
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Domicilio</strong>
+                                        </td>
+                                        <td class="right">
+                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->valueShipping, '2', ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td class="left">
                                         <strong>Total</strong>
                                     </td>
                                     <td class="right">
-                                    @if($this->gift)
-                                        <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal() + $this->valueGif, '2', ',', '.') }}</strong>
-                                    @else
-                                        <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->total(), '2', ',', '.') }}</strong>
-                                    @endif   
+                                        <strong><i class="fas fa-dollar-sign"></i>
+                                            @php
+                                                $cart = Cart::instance('cart')->total();
+
+                                                if(($this->valueGif) && ($this->valueShipping)){
+                                                    $op = $cart + $this->valueGif + $this->valueShipping;
+                                                    echo number_format((float)  $cart + $this->valueGif + $this->valueShipping , '2', ',', '.') ;
+
+                                                }elseif (!($this->valueGif) && ($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueShipping;
+                                                    echo number_format((float) $cart + $this->valueShipping, '2', ',', '.') ;
+
+                                                }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueGif;
+                                                echo number_format((float) $cart + $this->valueGif, '2', ',', '.') ;
+
+                                                }else{
+                                                    echo number_format((float) $cart , '2', ',', '.') ;
+                                                }
+
+
+                                            @endphp
+                                        </strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -351,16 +375,42 @@
                                         </td>
                                     </tr>
                                 @endif
+                                @if($this->valueShipping)
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Domicilio</strong>
+                                        </td>
+                                        <td class="right">
+                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->valueShipping, '2', ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td class="left">
                                         <strong>Total</strong>
                                     </td>
                                     <td class="right">
-                                        @if($this->gift)
-                                            <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal() + 15000, '2', ',', '.') }}</strong>
-                                        @else
-                                            <strong><i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->total(), '2', ',', '.') }}</strong>
-                                        @endif 
+                                        <strong><i class="fas fa-dollar-sign"></i>
+                                            @php
+                                                $cart = Cart::instance('cart')->total();
+
+                                                if(($this->valueGif) && ($this->valueShipping)){
+                                                    $op = $cart + $this->valueGif + $this->valueShipping;
+                                                    echo number_format((float)  $cart + $this->valueGif + $this->valueShipping , '2', ',', '.') ;
+
+                                                }elseif (!($this->valueGif) && ($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueShipping;
+                                                    echo number_format((float) $cart + $this->valueShipping, '2', ',', '.') ;
+
+                                                }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueGif;
+                                                echo number_format((float) $cart + $this->valueGif, '2', ',', '.') ;
+
+                                                }else{
+                                                    echo number_format((float) $cart , '2', ',', '.') ;
+                                                }
+                                            @endphp
+                                        </strong>
                                     </td>
                                 </tr>
                             </tbody>
@@ -406,4 +456,57 @@
     </div>
 </div>
 
+<!-- Modal Select address to shipping-->
+<div  wire:ignore.self class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="h6 modal-title">Selecciona tu direccion de entrega</h2>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0;">
+                @if ( count($this->addresses) )
+                    @foreach ($this->addresses as $address)
+                        <div class="d-flex align-items-center justify-content-between pb-1 row">
+                            <div class="col-10 h6 mb-0 d-flex align-items-center">
+                                    <div class="form-check dashboard-check">
+                                        <input wire:model.ignore="delivery_address" class="form-check-input" type="radio" value="{{ $address->id }}" id="address">
+                                        <label class="form-check-label" for="address">
+                                            {{ $address->address}}
+                                        </label>
+                                    </div>
+                                </div>
+                            <div class="col-1">
+                                @if ($address->favorite)
+                                    <i class="fas fa-star" style="color: #FBA918" title="Direccion favorita"></i>
+                                @endif
+                            </div>
+                            <div class="col-1">
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    No tienes direcciones configuradas
+                @endif
+                
+            </div>
+            <div class="modal-footer">
+                <button wire:click="selectShipping" type="button" data-bs-dismiss="modal" class="btn btn-secondary">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Alert Empty Shipping-->
+<div wire:ignore.self class="modal fade" id="alertShipping" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la direccion seleccionada no cuneta con un domicilio configurado. Quedara guardada su direccion y se le asignara uno antes de realizar su domicilio.
+            </div>
+            <div class="modal-footer">
+                <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @include('livewire.form_orders')

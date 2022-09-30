@@ -4,7 +4,10 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Address;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserForm extends Component
 {
@@ -60,7 +63,20 @@ class UserForm extends Component
         $user->enrollment = $this->enrollment;       
         
         $user->save();
-        
+
+        $findAddress = DB::table('addresses')->first();
+
+        if ($findAddress) {
+            $address = Address::findOrFail($findAddress->id);
+            
+        }else{
+            $address = new Address;
+        }
+
+        $address->address = $this->address;
+        $address->favorite = true;
+        $address->save();
+
         $this->dispatchBrowserEvent('closeModal', ['name' => 'createUser']);
         $this->emit('refreshParent');
         $this->clearForm();

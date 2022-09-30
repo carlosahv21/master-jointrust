@@ -1,4 +1,5 @@
 <?php return array (
+  'addresses' => 'App\\Http\\Livewire\\Addresses',
   'auth.login' => 'App\\Http\\Livewire\\Auth\\Login',
   'auth.register' => 'App\\Http\\Livewire\\Auth\\Register',
   'bootstrap-tables' => 'App\\Http\\Livewire\\BootstrapTables',
@@ -30,6 +31,8 @@
   'register-example' => 'App\\Http\\Livewire\\RegisterExample',
   'reset-password' => 'App\\Http\\Livewire\\ResetPassword',
   'reset-password-example' => 'App\\Http\\Livewire\\ResetPasswordExample',
+  'shipping-form' => 'App\\Http\\Livewire\\ShippingForm',
+  'shippings' => 'App\\Http\\Livewire\\Shippings',
   'transactions' => 'App\\Http\\Livewire\\Transactions',
   'upgrade-to-pro' => 'App\\Http\\Livewire\\UpgradeToPro',
   'user-form' => 'App\\Http\\Livewire\\UserForm',

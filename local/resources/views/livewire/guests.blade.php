@@ -36,6 +36,6 @@
     </div>
     <div class="d-flex justify-content-end py-4">
         <button wire:click="save" class="btn btn-secondary">Enviar amigos</button>
-        <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+        <button wire:click="skip" type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
     </div>
 </div>

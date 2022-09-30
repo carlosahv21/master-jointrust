@@ -3,10 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
+
+use App\Models\Address;
 
 class Profile extends Component
 {
@@ -21,7 +26,8 @@ class Profile extends Component
         'refreshParent' => '$refresh'
     ];
 
-    public function rules() {
+    public function rules() 
+    {
         
         if (auth()->user()->role === 'client') {
             $validate = [
@@ -58,7 +64,8 @@ class Profile extends Component
         return $validate;
     }
 
-    public function mount() {
+    public function mount() 
+    {
         $this->user = auth()->user(); 
     }
 
@@ -68,7 +75,8 @@ class Profile extends Component
         $this->emit('changePass', $this->user->password);
     }
 
-    public function save(){
+    public function save()
+    {
 
         if($this->user->confirm == 'option1'){
             $this->user->method = '';
@@ -77,6 +85,20 @@ class Profile extends Component
         $this->validate();
         $this->user->email_verified_at = 'yes';
         $this->user->save();
+
+        $findAddress = DB::table('addresses')->first();
+
+        if ($findAddress) {
+            $address = Address::findOrFail($findAddress->id);
+            
+        }else{
+            $address = new Address;
+        }
+
+        $address->user_id  = auth()->user()->id;
+        $address->address  = $this->user->address;
+        $address->favorite = true;
+        $address->save();
         
         if (auth()->user()->role === 'client') {
             if($this->user->advertisement != 'yes'){
@@ -90,7 +112,8 @@ class Profile extends Component
 
     }
 
-    public function update(){
+    public function update()
+    {
         
         $this->validate([
             'upload' => 'image|max:2000',
@@ -103,7 +126,8 @@ class Profile extends Component
 
     } 
 
-    public function first_time(){
+    public function first_time()
+    {
         $user = User::findOrFail(auth()->user()->id);
 
         $user->first_time = 'yes';

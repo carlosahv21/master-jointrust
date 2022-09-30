@@ -12,6 +12,7 @@
     <main class="content">
         
         <?php echo $__env->make('layouts.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <input type="hidden" id="text_copy">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
             <div class="d-block mb-4 mb-md-0">
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -31,14 +32,14 @@
         <div class="table-settings mb-4">
             <div class="row justify-content-between align-items-center">
                 <div class="col-9 col-lg-9 d-md-flex">
-                    <input type="hidden" id="text_copy">
+
                 </div>
                 <div class="col-3 col-lg-3 d-flex justify-content-end">
                     <button class="btn btn-secondary me-2 dropdown-toggle">
                         <i class="fas fa-file-pdf"></i> Descargar
                     </button>
                     <?php if($order['state'] != 'Entregado'): ?>
-                        <button class="btn btn-info me-2 dropdown-toggle" id="confirmation" data-id="<?php echo e($order['id']); ?>">
+                        <button class="btn btn-info me-2 dropdown-toggle confirmation" data-id="<?php echo e($order['id']); ?>">
                             <span class="fas fa-sms"></span> Confirmar pedido
                         </button>
                     <?php endif; ?>

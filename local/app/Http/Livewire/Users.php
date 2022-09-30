@@ -6,18 +6,22 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Models\Guest;
+use App\Models\Address;
 
 
 class Users extends Component
 {
     use WithPagination;
     public $item, $action, $search, $countUsers, $title_modal = '';
-    public $selected, $referrals = [];
+    public $selected, $shippings, $addresses = [];
 
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
-        'refreshParent' => '$refresh'
+        'refreshParent' => '$refresh',
+        'seeAddress',
+        'forcedCloseModal'
     ];
 
     public function selectItem($item, $action)
@@ -33,6 +37,9 @@ class Users extends Component
             $this->title_modal = 'Crear Usuario';
             $this->dispatchBrowserEvent('openModal', ['name' => 'createUser']);
             $this->emit('clearForm');
+        }else if($action == 'seeAddress'){
+            $this->dispatchBrowserEvent('openModal', ['name' => 'seeAddress']);
+            $this->emit('seeAddress', $this->item);
         }else{
             $this->title_modal = 'Editar Usuario';
             $this->dispatchBrowserEvent('openModal', ['name' => 'createUser']);
@@ -58,6 +65,34 @@ class Users extends Component
         $this->dispatchBrowserEvent('closeModal', ['name' => 'deleteUser']);
         $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Usuario eliminado!']);
 
+    }
+
+    public function seeAddress()
+    {
+        $this->addresses = DB::table('addresses')
+            ->where('user_id', '=', $this->item)
+            ->get();
+
+        $this->shippings = DB::table('shippings')
+            ->get();
+        
+    }
+
+    public function updateShipping(Request $request)
+    {
+        $address = Address::findOrFail($request->id);
+        $address->shipping_id = $request->shipping;
+
+        if($address->save()){
+            return true;
+        }
+        return false;
+
+    }
+
+    public function forcedCloseModal()
+    {
+        $this->addresses = [];
     }
 
     public function render()

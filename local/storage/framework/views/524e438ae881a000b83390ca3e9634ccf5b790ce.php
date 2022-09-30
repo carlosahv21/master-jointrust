@@ -76,9 +76,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" class="d-flex align-items-center">
+                                    <a class="d-flex align-items-center">
                                         <?php if($user->user_image): ?>
-                                        <img src="<?php echo e(Storage::disk('images_profile')->url($user->user_image)); ?>" class="avatar rounded-circle me-3" alt="<?php echo e($user->first_name ." ". $user->last_name); ?>">
+                                        <img src="<?php echo e(asset('local/storage/app/images_profile/'.$user->user_image)); ?>" class="avatar rounded-circle me-3" alt="<?php echo e($user->first_name ." ". $user->last_name); ?>">
                                         <?php else: ?>
                                         <img src="../assets/img/team/profile-picture-1.jpg" class="avatar rounded-circle me-3"
                                             alt="Avatar">
@@ -98,8 +98,9 @@
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a wire:click="selectItem(<?php echo e($user->id); ?>, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
                                         <?php if($user->role != 'admin'): ?>
-                                            <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                             <li><a href="/referals/<?php echo e($user->id); ?>" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
+                                            <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li></li>
+                                            <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                         <?php endif; ?>
                                         </ul>
                                     </li>
@@ -186,37 +187,37 @@ echo $html;
         </div>
     </div>
     <!-- Modal See Referrals-->
-    <div wire:ignore.self class="modal fade" id="seeReferrals" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div wire:ignore.self class="modal fade" id="seeAddress" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="h6 modal-title">Ver Referidos</h2>
+                    <h2 class="h6 modal-title">Direcciones de entrega</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                 <table class="table user-table align-items-center">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Telef&oacute;no</th>
-                            <th>Invitaci&oacute;n</th>
-
+                            <th>Direccion</th>
+                            <th>Domicilio</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $this->referrals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $referrals): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php echo csrf_field(); ?>
+                        <?php $__currentLoopData = $this->addresses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $address): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th><?php echo e($referrals->guest_name); ?></th>
-                                <th><?php echo e($referrals->guest_phone); ?></th>
-                                <?php if($referrals->guest): ?>
-                                    <th> 
-                                        <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0">
-                                            <i class="fas fa-user-check"></i>
-                                        </div>    
-                                    </th>
-                                <?php else: ?>
-                                    <th> <button wire:click.ignore="selectItem(<?php echo e($referrals->id); ?>, 'inviteReferrals')" class="btn btn-secondary"> <i class="fas fa-sms"></i> Invitar</button></th>
-                                <?php endif; ?>
+                                <th>
+                                    <?php echo e($address->address); ?>
+
+                                </th>
+                                <th>
+                                    <select class="form-control" onchange="addShiping(this, <?php echo e($address->id); ?> )">
+                                        <option value="">Elegir Zona</option>
+                                        <?php $__currentLoopData = $this->shippings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $shipping): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option <?php if($shipping->id == $address->shipping_id): ?> selected="selected" <?php endif; ?> value="<?php echo e($shipping->id); ?>"><?php echo e($shipping->zone); ?> </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </th>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>

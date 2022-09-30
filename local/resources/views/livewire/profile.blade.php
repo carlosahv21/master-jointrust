@@ -145,7 +145,7 @@
                         @if ($upload)
                         <img class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" src="{{ $upload->temporaryUrl() }}" alt="change avatar" width="100" height="100">                        
                         @elseif($user->user_image)
-                        <img src="{{ Storage::disk('images_profile')->url($user->user_image) }}" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="{{  $user->first_name ." ". $user->last_name}}">
+                        <img src="{{ asset('local/storage/app/images_profile/'.$user->user_image) }}" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="{{  $user->first_name ." ". $user->last_name}}">
                         @else
                         <img src="{{asset('public/assets/img/team/profile-picture-1.jpg') }}" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="{{  $user->first_name ." ". $user->last_name}}">
                         @endif
@@ -170,7 +170,7 @@
                                 @if ($upload)
                                 <img class="rounded avatar-xl" src="{{ $upload->temporaryUrl() }}" alt="change avatar" width="100" height="100">                        
                                 @elseif($user->user_image)
-                                <img class="rounded avatar-xl" src="{{ Storage::disk('images_profile')->url($user->user_image) }}" alt="change avatar" width="100" height="100"> 
+                                <img class="rounded avatar-xl" src="{{ asset('local/storage/app/images_profile/'.$user->user_image) }}" alt="change avatar" width="100" height="100"> 
                                 @else
                                 <img class="rounded avatar-xl" src="https://volt-pro-laravel-admin-dashboard.updivision.com/avatars/profile-picture-1.jpg" alt="change avatar" width="100" height="100">
                                 @endif

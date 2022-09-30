@@ -36,6 +36,18 @@
             <span class="sidebar-text">Usuarios</span>
           </a>
         </li>
+        <li class="nav-item {{ Request::segment(1) == 'gift-sets' ? 'active' : '' }}">
+          <a href="/gift-sets" class="nav-link">
+            <span class="sidebar-icon"><i class="fas fa-gifts"></i></span>
+            <span class="sidebar-text">Kits de regalos</span>
+          </a>
+        </li>
+        <li class="nav-item {{ Request::segment(1) == 'shippings' ? 'active' : '' }}">
+          <a href="/shippings" class="nav-link">
+            <span class="sidebar-icon"><i class="fas fa-gifts"></i></span>
+            <span class="sidebar-text">Domicilio</span>
+          </a>
+        </li>
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <li class="nav-item {{ Request::segment(1) == 'products' ? 'active' : '' }}">
           <a href="/list-products" class="nav-link">
@@ -53,12 +65,6 @@
           <a href="/list-domiciliary" class="nav-link">
             <span class="sidebar-icon"><i class="fas fa-user-check"></i></span>
             <span class="sidebar-text">Domiciliarios</span>
-          </a>
-        </li>
-        <li class="nav-item {{ Request::segment(1) == 'gift-sets' ? 'active' : '' }}">
-          <a href="/gift-sets" class="nav-link">
-            <span class="sidebar-icon"><i class="fas fa-gifts"></i></span>
-            <span class="sidebar-text">Kits de regalos</span>
           </a>
         </li>
       @elseif(auth()->user()->role == 'client')

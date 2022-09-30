@@ -80,6 +80,18 @@ class Guests extends Component
         }
     }
 
+    public function skip(){
+        
+        $user = User::findOrFail(auth()->user()->id);
+
+        $user->advertisement = 'yes';
+        $user->save();
+
+        if($user->first_time != 'yes'){
+            $this->dispatchBrowserEvent('openModal', ['name' => 'first_time']);
+        }
+    }
+
 
     public function inviteReferrals($data)
     {

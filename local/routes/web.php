@@ -31,6 +31,8 @@ use App\Http\Livewire\Orders;
 use App\Http\Livewire\ListOrders;
 use App\Http\Livewire\ListDomiciliary;
 use App\Http\Livewire\GiftSets;
+use App\Http\Livewire\Shippings;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,11 +47,8 @@ use App\Http\Livewire\GiftSets;
 Route::redirect('/', '/login');
 
 Route::get('/register', Register::class)->name('register');
-
 Route::get('/login', Login::class)->name('login');
-
 Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
-
 Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')->middleware('signed');
 
 Route::get('/404', Err404::class)->name('404');
@@ -59,8 +58,8 @@ Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
 Route::middleware('auth')->group(function () {
     // Rutas de Usuario
     Route::get('/profile', Profile::class)->name('profile');
-    Route::get('/profile-example', ProfileExample::class)->name('profile-example');
     Route::get('/users', Users::class)->name('users');
+    Route::post('/shipping', [ Users::class, 'updateShipping' ]);
 
     // Rutas de Invitados
     Route::get('/referals/{id}', [Guests::class, 'show']);
@@ -77,28 +76,22 @@ Route::middleware('auth')->group(function () {
     })->name('markAsRead');
     Route::get('/view-order/{id}/{notification_id?}', [Orders::class, 'show']);
     Route::get('/confirmation/{id}', [Orders::class, 'confirmation'])->name('confirmation');
-
     Route::get('/list-order', ListOrders::class)->name('list-order');
 
-
+    // Rutas de Domiciliarios
     Route::get('/list-domiciliary', ListDomiciliary::class)->name('list-domiciliary');
+    
+    // Rutas de Kit de Regalos
     Route::get('/gift-sets', GiftSets::class)->name('gift-sets');
 
-    Route::get('/login-example', LoginExample::class)->name('login-example');
-    Route::get('/register-example', RegisterExample::class)->name('register-example');
-    Route::get('/forgot-password-example', ForgotPasswordExample::class)->name('forgot-password-example');
-    Route::get('/reset-password-example', ResetPasswordExample::class)->name('reset-password-example');
+    // Rutas de Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/transactions', Transactions::class)->name('transactions');
-    Route::get('/bootstrap-tables', BootstrapTables::class)->name('bootstrap-tables');
-    Route::get('/lock', Lock::class)->name('lock');
-    Route::get('/buttons', Buttons::class)->name('buttons');
-    Route::get('/notifications', Notifications::class)->name('notifications');
-    Route::get('/forms', Forms::class)->name('forms');
-    Route::get('/modals', Modals::class)->name('modals');
-    Route::get('/typography', Typography::class)->name('typography');
     Route::get('/foo', function () {
         Artisan::call('storage:link');
     });
+
+    // Rutas de Domicilio
+    Route::get('/shippings', Shippings::class)->name('shippings');
+
 });
 Route::get('/config-cache', function() {      $exitCode = Artisan::call('config:cache');  $exitCode = Artisan::call('config:clear');    return '<h1>Clear Config cleared</h1>';  });

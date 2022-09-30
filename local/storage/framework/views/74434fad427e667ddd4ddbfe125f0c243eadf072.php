@@ -164,14 +164,9 @@
                         <div class="col-6">
                             <label for="inputDeliveryAddress">Dirección de entrega</label>
                         </div>
-                        <div class="col-6">
-                            <input wire:model.defer="delivery_address" type="text" class="form-control" placeholder="Direccion completa que incluya nombre edificio o conjunto" id="inputDeliveryAddress">
-                            <?php if($errors->has('delivery_address')): ?>
-                                <div class="invalid-feedback">
-                                    <?php echo e($errors->first('delivery_address')); ?>
-
-                                </div>
-                            <?php endif; ?>
+                        <div class="col-6 text-center" >
+                            <input wire:model="showAddress" type="text" class="form-control" disabled="disabled" placeholder="Aun no has seleccionado una direccion" id="inputDeliveryAddress">
+                            <button wire:click="showShipping" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-default">Selecciona tu direccion de entrega</button>
                         </div>
                     </div>
                     <div class="mt-4 row">
@@ -226,16 +221,45 @@
                                         </td>
                                     </tr>
                                 <?php endif; ?>
+                                <?php if($this->valueShipping): ?>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Domicilio</strong>
+                                        </td>
+                                        <td class="right">
+                                            <i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float)  $this->valueShipping, '2', ',', '.')); ?>
+
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                                 <tr>
                                     <td class="left">
                                         <strong>Total</strong>
                                     </td>
                                     <td class="right">
-                                    <?php if($this->gift): ?>
-                                        <strong><i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float) Cart::instance('cart')->subtotal() + $this->valueGif, '2', ',', '.')); ?></strong>
-                                    <?php else: ?>
-                                        <strong><i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float) Cart::instance('cart')->total(), '2', ',', '.')); ?></strong>
-                                    <?php endif; ?>   
+                                        <strong><i class="fas fa-dollar-sign"></i>
+                                            <?php
+                                                $cart = Cart::instance('cart')->total();
+
+                                                if(($this->valueGif) && ($this->valueShipping)){
+                                                    $op = $cart + $this->valueGif + $this->valueShipping;
+                                                    echo number_format((float)  $cart + $this->valueGif + $this->valueShipping , '2', ',', '.') ;
+
+                                                }elseif (!($this->valueGif) && ($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueShipping;
+                                                    echo number_format((float) $cart + $this->valueShipping, '2', ',', '.') ;
+
+                                                }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueGif;
+                                                echo number_format((float) $cart + $this->valueGif, '2', ',', '.') ;
+
+                                                }else{
+                                                    echo number_format((float) $cart , '2', ',', '.') ;
+                                                }
+
+
+                                            ?>
+                                        </strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -368,16 +392,43 @@ unset($__errorArgs, $__bag); ?>
                                         </td>
                                     </tr>
                                 <?php endif; ?>
+                                <?php if($this->valueShipping): ?>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Domicilio</strong>
+                                        </td>
+                                        <td class="right">
+                                            <i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float)  $this->valueShipping, '2', ',', '.')); ?>
+
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                                 <tr>
                                     <td class="left">
                                         <strong>Total</strong>
                                     </td>
                                     <td class="right">
-                                        <?php if($this->gift): ?>
-                                            <strong><i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float) Cart::instance('cart')->subtotal() + 15000, '2', ',', '.')); ?></strong>
-                                        <?php else: ?>
-                                            <strong><i class="fas fa-dollar-sign"></i> <?php echo e(number_format((float) Cart::instance('cart')->total(), '2', ',', '.')); ?></strong>
-                                        <?php endif; ?> 
+                                        <strong><i class="fas fa-dollar-sign"></i>
+                                            <?php
+                                                $cart = Cart::instance('cart')->total();
+
+                                                if(($this->valueGif) && ($this->valueShipping)){
+                                                    $op = $cart + $this->valueGif + $this->valueShipping;
+                                                    echo number_format((float)  $cart + $this->valueGif + $this->valueShipping , '2', ',', '.') ;
+
+                                                }elseif (!($this->valueGif) && ($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueShipping;
+                                                    echo number_format((float) $cart + $this->valueShipping, '2', ',', '.') ;
+
+                                                }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                    // $op = $cart + $this->valueGif;
+                                                echo number_format((float) $cart + $this->valueGif, '2', ',', '.') ;
+
+                                                }else{
+                                                    echo number_format((float) $cart , '2', ',', '.') ;
+                                                }
+                                            ?>
+                                        </strong>
                                     </td>
                                 </tr>
                             </tbody>
@@ -423,4 +474,58 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
+<!-- Modal Select address to shipping-->
+<div  wire:ignore.self class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="h6 modal-title">Selecciona tu direccion de entrega</h2>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0;">
+                <?php if( count($this->addresses) ): ?>
+                    <?php $__currentLoopData = $this->addresses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $address): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="d-flex align-items-center justify-content-between pb-1 row">
+                            <div class="col-10 h6 mb-0 d-flex align-items-center">
+                                    <div class="form-check dashboard-check">
+                                        <input wire:model.ignore="delivery_address" class="form-check-input" type="radio" value="<?php echo e($address->id); ?>" id="address">
+                                        <label class="form-check-label" for="address">
+                                            <?php echo e($address->address); ?>
+
+                                        </label>
+                                    </div>
+                                </div>
+                            <div class="col-1">
+                                <?php if($address->favorite): ?>
+                                    <i class="fas fa-star" style="color: #FBA918" title="Direccion favorita"></i>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php else: ?>
+                    No tienes direcciones configuradas
+                <?php endif; ?>
+                
+            </div>
+            <div class="modal-footer">
+                <button wire:click="selectShipping" type="button" data-bs-dismiss="modal" class="btn btn-secondary">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Alert Empty Shipping-->
+<div wire:ignore.self class="modal fade" id="alertShipping" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Sr. (a) <?php echo e(auth()->user()->first_name .' '. auth()->user()->last_name); ?>, la direccion seleccionada no cuneta con un domicilio configurado. Quedara guardada su direccion y se le asignara uno antes de realizar su domicilio.
+            </div>
+            <div class="modal-footer">
+                <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php echo $__env->make('livewire.form_orders', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/livewire/orders.blade.php ENDPATH**/ ?>

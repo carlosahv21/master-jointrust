@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title><?php echo $__env->yieldContent('title'); ?> - Jointrust</title>
     <!-- Apex Charts -->
@@ -93,7 +94,46 @@
     <?php echo \Livewire\Livewire::scripts(); ?>
 
     <script>
+        function addShiping(sel, id) {
 
+            $.ajax({
+            method: "POST",
+            url: "/shipping",   
+            data:{
+                    "shipping" : sel.value,
+                    "id" : id,
+                    "_token" : $('input[name=_token]').val()
+                },
+            }).done(function( res ) {
+                if(res){
+                    const notyf = new Notyf({
+                        position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+                            types: [
+                                {
+                                    type: 'success',
+                                    background: '#10B981',
+                                    icon: {
+                                        className: 'fas fa-check',
+                                        tagName: 'span',
+                                        color: '#fff'
+                                    },
+                                    dismissible: false
+                                }
+                            ]
+                        });
+                        notyf.open({
+                            type: 'success',
+                            message: 'Domicilio agregado a direccion!',
+                        });
+                }else{
+
+                }
+            });
+        }
+        
         window.addEventListener('closeModal', event => {
             $('#'+event.detail.name).modal('hide');
         })
@@ -185,7 +225,7 @@
         
         $(document).ready(function(){
 
-            var modals = ['createUser', 'createProduct'];
+            var modals = ['createUser', 'createProduct', 'createShipping', 'seeAddress'];
 
             modals.forEach(element => {
                 $("#"+element).on('hidden.bs.modal', function(){
@@ -319,6 +359,10 @@
             
             $('#addReferrals').on('click',function (params) {
                 $('#advertisement').modal('show');
+            });
+
+            $('#addAddress').on('click',function (params) {
+                $('#address').modal('show');
             });
              
         });

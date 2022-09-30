@@ -72,13 +72,15 @@
           </a>
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 shadow-lg">
             @if (auth()->user()->role == 'admin')
-              <a class="dropdown-item"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Cliente</a>
+              <a href="{{ route('users') }}" class="dropdown-item"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Cliente</a>
               <div role="separator" class="dropdown-divider my-1"></div>
               <a class="dropdown-item"> <i class="fas fa-box" aria-hidden="true"></i> Agregar Producto</a>
             @elseif(auth()->user()->role == 'client')
-              <a class="dropdown-item"> <i class="fas fa-file-invoice" aria-hidden="true"></i> Agregar Pedido</a>
+              <a href="{{ route('orders') }}" class="dropdown-item"> <i class="fas fa-file-invoice" aria-hidden="true"></i> Agregar Pedido</a>
               <div role="separator" class="dropdown-divider my-1"></div>
               <a class="dropdown-item" id="addReferrals"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Referido</a>
+              <div role="separator" class="dropdown-divider my-1"></div>
+              <a class="dropdown-item" id="addAddress"> <i class="far fa-address-card"></i> Agregar Direcci&oacute;n </a>
             @else
 
             @endif
@@ -89,7 +91,7 @@
             aria-expanded="false">
             <div class="media d-flex align-items-center">
               @if(auth()->user()->user_image)
-              <img class="avatar rounded-circle" alt="Imagen Perfil" src="{{ Storage::disk('images_profile')->url(auth()->user()->user_image) }}">   
+              <img class="avatar rounded-circle" alt="Imagen Perfil" src="{{ asset('local/storage/app/images_profile/'.auth()->user()->user_image) }}">   
               @else
               <img class="avatar rounded-circle" alt="Imagen Perfil" src="{{ asset('public/assets/img/team/profile-picture-1.jpg') }}">
               @endif
@@ -128,6 +130,20 @@
           </div>
           <div class="modal-body">
               @livewire('guests')
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Modal Address-->
+<div wire:ignore.self class="modal fade" id="address" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="h6 modal-title">Agregar dirección</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              @livewire('addresses')
           </div>
       </div>
   </div>
