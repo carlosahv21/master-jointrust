@@ -66,6 +66,16 @@
             </div>
 
             <div class="col-3 col-lg-3 d-flex justify-content-end">
+                @if (auth()->user()->role == 'admin')
+                    <div class="dropdown px-2">
+                        <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acción masiva <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><button wire:click="selectItem('','assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-shipping-fast"></i> Asignar Domiciliario</button></li>
+                        </ul>
+                    </div>
+                @endif
                 <a href="/orders"  class="btn btn-secondary me-2 dropdown-toggle" >
                     <span class="fas fa-plus"></span> Crear Pedidos
                 </a>
@@ -80,9 +90,7 @@
                         <tr>
                             <th>
                                 <div class="form-check dashboard-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="orderCheck55">
-                                    <label class="form-check-label" for="orderCheck55">
-                                    </label>
+                                    {{-- <input wire:model="selectPage" class="form-check-input" type="checkbox"> --}}
                                 </div>
                             </th>
                             <th>Referencia del pedido</th>
@@ -101,8 +109,8 @@
                                 <tr>
                                     <td>
                                         <div class="form-check dashboard-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="orderCheck{{ $order->id }}">
-                                            <label class="form-check-label" for="orderCheck{{ $order->id }}">
+                                            <input wire:model="selected" class="form-check-input" type="checkbox" value="{{ $order->id }}">
+                                            <label class="form-check-label" for="ProductCheck1">
                                             </label>
                                         </div>
                                     </td>
@@ -126,7 +134,7 @@
                                                         <button wire:click="selectItem({{ $order->id }}, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
                                                     </li>
                                                     <li>
-                                                        <button class="dropdown-item btn-outline-gray-500 confirmation" data-id="{{ $order->id }}"><i class="fas fa-sms"></i> Confirmar pedido</button>
+                                                        <button class="dropdown-item btn-outline-gray-500 sendWhatsapp" data-id="{{ $order->id }}" data-url="confirmation"><i class="fas fa-sms"></i> Confirmar pedido</button>
                                                     </li>
                                                     <li>
                                                         <button wire:click="selectItem({{ $order->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
@@ -241,9 +249,9 @@
                     <div class="col-12 p-2">
                         <label for="inputIdDomiciliary" class="form-label">Usuarios <span class="text-danger"> *</span></label>
                         <select wire:model="idDomiciliary" id="inputIdDomiciliary" class="form-control">
-                            <option disabled="" selected>Elegir</option>
+                            <option selected>Elegir</option>
                             @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->first_name}} {{$user->last_name}}</option>
+                                <option value="{{ $user->id }}">{{ $user->first_name}} {{$user->last_name}}</option>
                             @endforeach
                         </select>
                     </div>

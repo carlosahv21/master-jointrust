@@ -40,6 +40,11 @@ class Order extends Model
         return $this->belongsToMany('App\Models\GiftSet');
     }
 
+    public function address()
+    {
+        return $this->belongsTo('App\Models\Address', 'delivery_address');
+    }
+
     public function scopeSearch($query,$term)
     {
         $term = "%$term%";

@@ -114,8 +114,10 @@
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a wire:click="selectItem({{ $user->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
                                         @if ($user->role != 'admin')
-                                            <li><a href="/referals/{{$user->id}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
-                                            <li><button wire:click="selectItem({{ $user->id }}, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li></li>
+                                            @if ($user->role == 'client')
+                                                <li><a href="/referals/{{$user->id}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
+                                                <li><button wire:click="selectItem({{ $user->id }}, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li>
+                                            @endif
                                             <li><button wire:click="selectItem({{ $user->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                         @endif
                                         </ul>

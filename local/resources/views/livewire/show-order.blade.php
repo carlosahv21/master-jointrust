@@ -34,7 +34,7 @@
                         <i class="fas fa-file-pdf"></i> Descargar
                     </button>
                     @if ($order['state'] != 'Entregado')
-                        <button class="btn btn-info me-2 dropdown-toggle confirmation" data-id="{{$order['id']}}">
+                        <button class="btn btn-info me-2 dropdown-toggle sendWhatsapp" data-id="{{ $order['id'] }}" data-url="confirmation">
                             <span class="fas fa-sms"></span> Confirmar pedido
                         </button>
                     @endif
@@ -82,6 +82,9 @@
                                     <dt class="col-6"><strong>Fecha de Entrega:</strong>
                                     </dt>
                                     <dd class="col-6">{{ \Carbon\Carbon::parse($order['date_order'])->format('d/m/Y')}}</dd>
+                                    <dt class="col-6"><strong>Direcci&oacute;n de Entrega:</strong>
+                                    </dt>
+                                    <dd class="col-6">{{ $address['address'] }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -141,13 +144,22 @@
                                                     </td>
                                                     <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($order['subtotal'],'2',',','.') }}</td>
                                                 </tr>
+                                                @if ($shipping['value'])
+                                                    <tr>
+                                                        <td class="left">
+                                                            <strong>Domicilio</strong>
+                                                        </td>
+                                                        <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($shipping['value'],'2',',','.') }}</td>
+                                                    </tr>
+                                                @endif
+
                                                 @if( $order['gift_sets'] )
-                                                <tr>
-                                                    <td class="left">
-                                                        <strong>Kit de regalo</strong>
-                                                    </td>
-                                                    <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($order['gift_sets'],'2',',','.')}}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td class="left">
+                                                            <strong>Kit de regalo</strong>
+                                                        </td>
+                                                        <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($order['gift_sets'],'2',',','.')}}</td>
+                                                    </tr>
                                                 @endif
                                                 <tr>
                                                     <td class="left">
@@ -157,10 +169,14 @@
                                                         <strong>
                                                             <i class="fas fa-dollar-sign" aria-hidden="true"></i>
 
-                                                            @if( $order['gift_sets'] )
+                                                            @if( ($order['gift_sets']) && $shipping['value'])
+                                                                {{ number_format($order['total'] + $order['gift_sets'] + $shipping['value'],'2',',','.') }}
+                                                            @elseif( !($order['gift_sets']) && ($shipping['value']))
+                                                                {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
+                                                            @elseif( ($order['gift_sets']) && !($shipping['value']))
                                                                 {{ number_format($order['total'] + $order['gift_sets'] ,'2',',','.') }}
                                                             @else
-                                                                {{ number_format($order['total'],'2',',','.') }}
+                                                                {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
                                                             @endif
                                                         </strong>
                                                     </td>

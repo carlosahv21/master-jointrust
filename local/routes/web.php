@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
     // Rutas de Domiciliarios
     Route::get('/list-domiciliary', ListDomiciliary::class)->name('list-domiciliary');
+    Route::get('/sendRouteWhatsapp/{id}', [ListDomiciliary::class, 'sendRouteWhatsapp'])->name('sendRouteWhatsapp');
     
     // Rutas de Kit de Regalos
     Route::get('/gift-sets', GiftSets::class)->name('gift-sets');

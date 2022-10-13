@@ -98,8 +98,10 @@
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a wire:click="selectItem(<?php echo e($user->id); ?>, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
                                         <?php if($user->role != 'admin'): ?>
-                                            <li><a href="/referals/<?php echo e($user->id); ?>" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
-                                            <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li></li>
+                                            <?php if($user->role == 'client'): ?>
+                                                <li><a href="/referals/<?php echo e($user->id); ?>" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Referidos</a></li>
+                                                <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'seeAddress')" class="dropdown-item btn-outline-gray-500"><i class="far fa-address-card"></i> Ver Direcciones</button></li>
+                                            <?php endif; ?>
                                             <li><button wire:click="selectItem(<?php echo e($user->id); ?>, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button></li>
                                         <?php endif; ?>
                                         </ul>
@@ -134,15 +136,15 @@
                     <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('user-form')->html();
-} elseif ($_instance->childHasBeenRendered('l1532092529-0')) {
-    $componentId = $_instance->getRenderedChildComponentId('l1532092529-0');
-    $componentTag = $_instance->getRenderedChildComponentTagName('l1532092529-0');
+} elseif ($_instance->childHasBeenRendered('cSPiBI9')) {
+    $componentId = $_instance->getRenderedChildComponentId('cSPiBI9');
+    $componentTag = $_instance->getRenderedChildComponentTagName('cSPiBI9');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('l1532092529-0');
+    $_instance->preserveRenderedChild('cSPiBI9');
 } else {
     $response = \Livewire\Livewire::mount('user-form');
     $html = $response->html();
-    $_instance->logRenderedChild('l1532092529-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('cSPiBI9', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

@@ -39,7 +39,7 @@
                         <i class="fas fa-file-pdf"></i> Descargar
                     </button>
                     <?php if($order['state'] != 'Entregado'): ?>
-                        <button class="btn btn-info me-2 dropdown-toggle confirmation" data-id="<?php echo e($order['id']); ?>">
+                        <button class="btn btn-info me-2 dropdown-toggle sendWhatsapp" data-id="<?php echo e($order['id']); ?>" data-url="confirmation">
                             <span class="fas fa-sms"></span> Confirmar pedido
                         </button>
                     <?php endif; ?>
@@ -87,6 +87,9 @@
                                     <dt class="col-6"><strong>Fecha de Entrega:</strong>
                                     </dt>
                                     <dd class="col-6"><?php echo e(\Carbon\Carbon::parse($order['date_order'])->format('d/m/Y')); ?></dd>
+                                    <dt class="col-6"><strong>Direcci&oacute;n de Entrega:</strong>
+                                    </dt>
+                                    <dd class="col-6"><?php echo e($address['address']); ?></dd>
                                 </dl>
                             </div>
                         </div>
@@ -150,13 +153,22 @@
                                                     </td>
                                                     <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> <?php echo e(number_format($order['subtotal'],'2',',','.')); ?></td>
                                                 </tr>
+                                                <?php if($shipping['value']): ?>
+                                                    <tr>
+                                                        <td class="left">
+                                                            <strong>Domicilio</strong>
+                                                        </td>
+                                                        <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> <?php echo e(number_format($shipping['value'],'2',',','.')); ?></td>
+                                                    </tr>
+                                                <?php endif; ?>
+
                                                 <?php if( $order['gift_sets'] ): ?>
-                                                <tr>
-                                                    <td class="left">
-                                                        <strong>Kit de regalo</strong>
-                                                    </td>
-                                                    <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> <?php echo e(number_format($order['gift_sets'],'2',',','.')); ?></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td class="left">
+                                                            <strong>Kit de regalo</strong>
+                                                        </td>
+                                                        <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> <?php echo e(number_format($order['gift_sets'],'2',',','.')); ?></td>
+                                                    </tr>
                                                 <?php endif; ?>
                                                 <tr>
                                                     <td class="left">
@@ -166,11 +178,17 @@
                                                         <strong>
                                                             <i class="fas fa-dollar-sign" aria-hidden="true"></i>
 
-                                                            <?php if( $order['gift_sets'] ): ?>
+                                                            <?php if( ($order['gift_sets']) && $shipping['value']): ?>
+                                                                <?php echo e(number_format($order['total'] + $order['gift_sets'] + $shipping['value'],'2',',','.')); ?>
+
+                                                            <?php elseif( !($order['gift_sets']) && ($shipping['value'])): ?>
+                                                                <?php echo e(number_format($order['total'] + $shipping['value'],'2',',','.')); ?>
+
+                                                            <?php elseif( ($order['gift_sets']) && !($shipping['value'])): ?>
                                                                 <?php echo e(number_format($order['total'] + $order['gift_sets'] ,'2',',','.')); ?>
 
                                                             <?php else: ?>
-                                                                <?php echo e(number_format($order['total'],'2',',','.')); ?>
+                                                                <?php echo e(number_format($order['total'] + $shipping['value'],'2',',','.')); ?>
 
                                                             <?php endif; ?>
                                                         </strong>

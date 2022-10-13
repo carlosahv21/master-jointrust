@@ -1,6 +1,7 @@
 @section('title','Domiciliarios')
 
 <div>
+    <input type="hidden" id="text_copy">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -36,15 +37,9 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar domiciliado">
                 </div>
             </div>
-            {{-- <div class="col-3 col-lg-3 d-md-flex">
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Bulk Action</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete Order</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div> --}}
+            <div class="col-3 col-lg-3 d-flex justify-content-end">
+                <button wire:click="selectItem('', 'sendRoute')" class="btn btn-secondary "> <i class="fas fa-route"></i> Enviar ruta</button>
+            </div>
         </div>
     </div>
     <div class="card shadow border-0 table-wrapper table-responsive">
@@ -69,6 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{ $orders_domiciliaries }}
                         @foreach ($orders_domiciliaries as $order)
 
                             <tr>
@@ -80,10 +76,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{  Orders::getReference($order->orders->code) }}
+                                    {{  $order->orders->code }}
                                 </td>
                                 <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
-                                <th>{{ $order->orders->delivery_address }}</th>
+                                <th>{{ $order->orders->address->address }}</th>
                                 <th>{{ ucfirst($order->orders->user->first_name) }} {{ ucfirst($order->orders->user->last_name) }}</th>
                                 <th>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y')  }}</th>
                                 <th style="width: 5%;">
@@ -134,5 +130,36 @@
             </div>
         </div>
     </div>
-    
+    <!-- Modal sendRoute-->
+    <div wire:ignore.self class="modal fade" id="sendRoute" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h6 modal-title">Seleccionar Domiciliario para enviar ruta</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 p-2">
+                        @foreach ($users as $user)
+                            <div class="d-flex align-items-center justify-content-between pb-1 row">
+                                <div class="col-9 h6 mb-0 d-flex align-items-center">
+                                        <div class="form-check dashboard-check">
+                                            <label class="form-check-label" for="address">
+                                                {{ $user->first_name}} {{$user->last_name}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                <div class="col-3">
+                                    <button class="btn btn-secondary me-2 sendWhatsapp" data-id="{{ $user->id }}" data-bs-dismiss="modal" data-url="sendRouteWhatsapp" class="btn btn-secondary">Enviar</button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

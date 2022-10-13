@@ -1,6 +1,7 @@
 <?php $__env->startSection('title','Domiciliarios'); ?>
 
 <div>
+    <input type="hidden" id="text_copy">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -28,7 +29,9 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar domiciliado">
                 </div>
             </div>
-            
+            <div class="col-3 col-lg-3 d-flex justify-content-end">
+                <button wire:click="selectItem('', 'sendRoute')" class="btn btn-secondary "> <i class="fas fa-route"></i> Enviar ruta</button>
+            </div>
         </div>
     </div>
     <div class="card shadow border-0 table-wrapper table-responsive">
@@ -53,6 +56,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php echo e($orders_domiciliaries); ?>
+
                         <?php $__currentLoopData = $orders_domiciliaries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <tr>
@@ -64,11 +69,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <?php echo e(Orders::getReference($order->orders->code)); ?>
+                                    <?php echo e($order->orders->code); ?>
 
                                 </td>
                                 <th><?php echo e(ucfirst($order->user->first_name)); ?> <?php echo e(ucfirst($order->user->last_name)); ?></th>
-                                <th><?php echo e($order->orders->delivery_address); ?></th>
+                                <th><?php echo e($order->orders->address->address); ?></th>
                                 <th><?php echo e(ucfirst($order->orders->user->first_name)); ?> <?php echo e(ucfirst($order->orders->user->last_name)); ?></th>
                                 <th><?php echo e(\Carbon\Carbon::parse($order->created_at)->format('d-m-Y')); ?></th>
                                 <th style="width: 5%;">
@@ -120,5 +125,37 @@
             </div>
         </div>
     </div>
-    
+    <!-- Modal sendRoute-->
+    <div wire:ignore.self class="modal fade" id="sendRoute" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h6 modal-title">Seleccionar Domiciliario para enviar ruta</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 p-2">
+                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="d-flex align-items-center justify-content-between pb-1 row">
+                                <div class="col-9 h6 mb-0 d-flex align-items-center">
+                                        <div class="form-check dashboard-check">
+                                            <label class="form-check-label" for="address">
+                                                <?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                <div class="col-3">
+                                    <button class="btn btn-secondary me-2 sendWhatsapp" data-id="<?php echo e($user->id); ?>" data-bs-dismiss="modal" data-url="sendRouteWhatsapp" class="btn btn-secondary">Enviar</button>
+                                </div>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div><?php /**PATH /Users/usuario/Sites/app_laravel_subir/local/resources/views/livewire/list-domiciliary.blade.php ENDPATH**/ ?>

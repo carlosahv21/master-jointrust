@@ -38,17 +38,50 @@ class ListOrders extends Component
 
     }
 
+    public function getOrdersProperty()
+    {
+        $input = $this->search;
+
+        return Order::when($this->statusFilter, function($query) {
+                if($this->statusFilter !== 'Todos'){
+                    $query->where('state',$this->statusFilter);
+                }
+            })
+            ->where(function ($query) use ($input) {
+                $query->with('user')->whereHas('user', function ($q) use ($input) {
+                    $q->where('first_name', 'like', '%' . $input . '%')
+                        ->orWhere('code', 'like', '%' . $input . '%');
+                });
+            })
+            ->where(function ($query) use ($input) {
+                if(!empty($this->date_ini) && !empty($this->date_fin)){
+                    $query->whereBetween('date_order', [$this->date_ini, $this->date_fin]);
+                }
+            })
+            ->where(function ($query) use ($input) {
+                if(auth()->user()->role != 'admin'){
+                    $query->where('user_id', auth()->user()->id);
+                }
+            })
+            ->orderBy('date_order', $this->sortBy)
+            ->paginate($this->perPage);
+    }
+
     public function selectItem($item, $action)
     {
         $this->item = $item;
         
         if($action == 'delete'){
             $this->dispatchBrowserEvent('openModal', ['name' => 'deleteOrder']);
-        }else if($action == 'masiveDelete'){
-            $this->dispatchBrowserEvent('openModal', ['name' => 'deleteOrderMasive']);
+        }else if($action == 'assignShipping'){
+            $this->dispatchBrowserEvent('openModal', ['name' => 'assignShipping']);
             $this->countOrders = count($this->selected);
         }else if($action == 'assignDomiciliary'){
-            $this->dispatchBrowserEvent('openModal', ['name' => 'assignDomiciliary']);            
+            if(($this->item) || ($this->selected)){
+                $this->dispatchBrowserEvent('openModal', ['name' => 'assignDomiciliary']);            
+            }else{
+                $this->dispatchBrowserEvent('notify', ['type' => 'danger', 'message' => 'Debes seleccionar al menos un pedido!']);            
+            }
         }else if($action == 'comments'){
             $order = Order::findOrFail($this->item);
             if ($order->commentaries) {
@@ -86,19 +119,32 @@ class ListOrders extends Component
 
     public function saveDomiciliary(){
 
-        $order = Order::findOrFail($this->item);
+        if ($this->selected) {
+            $orders = Order::whereKey($this->selected)->get();
 
-        if(OrderDomiciliary::where('order_id', $this->item)->count() > 0){
-             $this->dispatchBrowserEvent('notify', ['type' => 'danger', 'message' => 'Este Pedido ya se encuentra asignado a un domiciliario!']);
+            foreach (collect($orders)->toArray() as $key => $value) {
+                $this->insertDomiciliary($value['id']);
+            }
+
         }else{
-            $domiciliary = new OrderDomiciliary();
-            $domiciliary->order_id = $order->id;
-            $domiciliary->user_id = $this->idDomiciliary;
-            $domiciliary->save();            
-           
-            $this->dispatchBrowserEvent('closeModal', ['name' => 'assignDomiciliary']);
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Pedido asignado a un domiciliario!']);          
-        }        
+            $order = Order::findOrFail($this->item);
+            $this->insertDomiciliary($order->id);
+        }       
+    }
+
+    public function insertDomiciliary($order_id)
+    {
+        if(OrderDomiciliary::where('order_id', $order_id)->count() > 0){
+            $this->dispatchBrowserEvent('notify', ['type' => 'danger', 'message' => 'Este Pedido ya se encuentra asignado a un domiciliario!']);
+       }else{
+           $domiciliary = new OrderDomiciliary();
+           $domiciliary->order_id = $order_id;
+           $domiciliary->user_id = $this->idDomiciliary;
+           $domiciliary->save();            
+          
+           $this->dispatchBrowserEvent('closeModal', ['name' => 'assignDomiciliary']);
+           $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Pedido asignado a un domiciliario!']);          
+       } 
     }
 
     public function saveCommentaries(){
@@ -167,29 +213,7 @@ class ListOrders extends Component
 
         return view('livewire.list-orders', 
             [
-                'orders' => Order::when($this->statusFilter, function($query) {
-                        if($this->statusFilter !== 'Todos'){
-                            $query->where('state',$this->statusFilter);
-                        }
-                    })
-                    ->where(function ($query) use ($input) {
-                        $query->with('user')->whereHas('user', function ($q) use ($input) {
-                            $q->where('first_name', 'like', '%' . $input . '%')
-                                ->orWhere('code', 'like', '%' . $input . '%');
-                        });
-                    })
-                    ->where(function ($query) use ($input) {
-                        if(!empty($this->date_ini) && !empty($this->date_fin)){
-                            $query->whereBetween('date_order', [$this->date_ini, $this->date_fin]);
-                        }
-                    })
-                    ->where(function ($query) use ($input) {
-                        if(auth()->user()->role != 'admin'){
-                            $query->where('user_id', auth()->user()->id);
-                        }
-                    })
-                    ->orderBy('date_order', $this->sortBy)
-                    ->paginate($this->perPage),
+                'orders' => $this->orders,
                 'users' => User::where('role', 'domiciliary')->get()
             ]
         );
