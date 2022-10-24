@@ -29,7 +29,7 @@
 
     <div class="table-settings mb-4">
         <div class="row justify-content-between align-items-center">
-            <div class="col-8 col-lg-6 d-flex">
+            <div class="col-8 col-lg-8 d-flex">
                 <div class="input-group me-2 me-lg-3" style="width: 40%;">
                     <span class="input-group-text"> 
                         <span class="fas fa-search"></span>
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="col-3 col-lg-3 d-flex justify-content-end">
+            <div class="col-3 col-lg-4 d-flex justify-content-end">
                 @if (auth()->user()->role == 'admin')
                     <div class="dropdown px-2">
                         <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

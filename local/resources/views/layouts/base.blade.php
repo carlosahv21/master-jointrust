@@ -254,6 +254,10 @@
                 }
             });
 
+            $('#another-address').on('click',function (params) {
+                alert('hola');
+            });
+
             $(".datepicker").on("change",function(){
                 $('#dateOrderError').hide();
                 let date = $(this).data('date-order');

@@ -74,7 +74,7 @@
             @if (auth()->user()->role == 'admin')
               <a href="{{ route('users') }}" class="dropdown-item"> <i class="fas fa-users" aria-hidden="true"></i> Agregar Cliente</a>
               <div role="separator" class="dropdown-divider my-1"></div>
-              <a class="dropdown-item"> <i class="fas fa-box" aria-hidden="true"></i> Agregar Producto</a>
+              <a href="/list-products" class="dropdown-item"> <i class="fas fa-box" aria-hidden="true"></i> Agregar Producto</a>
             @elseif(auth()->user()->role == 'client')
               <a href="{{ route('orders') }}" class="dropdown-item"> <i class="fas fa-file-invoice" aria-hidden="true"></i> Agregar Pedido</a>
               <div role="separator" class="dropdown-divider my-1"></div>

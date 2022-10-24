@@ -44,9 +44,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ strtoupper($product->name )}}</h5>
-                                        <small class="text-muted">Description</small>
-                                        <div wire:ignore class="text-end" style="margin-top: 11%;">
+                                        <h5 class="card-title" style="margin-bottom: 0;">{{ strtoupper($product->name )}}</h5>
+                                        <small class="text-muted">{{ $product->reference }} - {{ $product->presentation }}</small> <br>
+                                        <small class="text-muted"><b>Precio:</b> $ {{ number_format($product->price,'0', ',', '.') }} </small>
+                                        <div wire:ignore class="text-end pt-5">
                                             <a wire:click="addProduct({{ $product->id }},'{{ $product->name }}',{{ $product->price }}, '{{ $product->reference }}' )" class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Agregar al pedido"> 
                                                 <small>
                                                     <div class="icon-shape icon-xs icon-shape-secondary rounded">
@@ -469,8 +470,8 @@
                         <div class="d-flex align-items-center justify-content-between pb-1 row">
                             <div class="col-10 h6 mb-0 d-flex align-items-center">
                                     <div class="form-check dashboard-check">
-                                        <input wire:model.ignore="delivery_address" class="form-check-input" type="radio" value="{{ $address->id }}" id="address">
-                                        <label class="form-check-label" for="address">
+                                        <input wire:model.ignore="delivery_address" class="form-check-input" type="radio" value="{{ $address->id }}" id="address-{{ $address->id }}">
+                                        <label class="form-check-label" for="address-{{ $address->id }}">
                                             {{ $address->address}}
                                         </label>
                                     </div>
