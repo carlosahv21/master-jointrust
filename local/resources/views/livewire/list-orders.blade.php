@@ -95,6 +95,7 @@
                             </th>
                             <th>Referencia del pedido</th>
                             <th>Total</th>
+                            <th>Direccion de Entrega</th>
                             <th>Fecha de Entrega</th>
                             @if (auth()->user()->role == 'admin')
                                 <th>Cliente</th>
@@ -118,6 +119,7 @@
                                         {{ $order->code }}
                                     </td>
                                     <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
+                                    <th>{{ $order->address }}</th>
                                     <th>{{ $order->date_order }}</th>
                                     <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
                                     <th>
@@ -129,16 +131,21 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <li>
-                                                    <a wire:click="selectItem({{ $order->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a></li>
-                                                    <li>
-                                                        <button wire:click="selectItem({{ $order->id }}, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
-                                                    </li>
-                                                    <li>
-                                                        <button class="dropdown-item btn-outline-gray-500 sendWhatsapp" data-id="{{ $order->id }}" data-url="confirmation"><i class="fas fa-sms"></i> Confirmar pedido</button>
-                                                    </li>
-                                                    <li>
-                                                        <button wire:click="selectItem({{ $order->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
-                                                    </li>
+                                                    <a href="/view/{{encrypt($order->id)}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver pedido</a>
+                                                </li>
+                                                <li>
+                                                    <a wire:click="selectItem({{ $order->id }}, 'update')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Editar</a>
+                                                </li>
+                                                <li>
+                                                    <button wire:click="selectItem({{ $order->id }}, 'assignDomiciliary')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-user-check"></i> Asignar Domiciliario</button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item btn-outline-gray-500"
+                                                    onclick="sendWhatsapp(this, {{ $order->id }} , 'confirmation')"><i class="fas fa-sms"></i> Confirmar pedido</button>
+                                                </li>
+                                                <li>
+                                                    <button wire:click="selectItem({{ $order->id }}, 'delete')" class="dropdown-item btn-outline-gray-500 text-danger"><i class="fas fa-trash"></i> Eliminar</button>
+                                                </li>
                                             </ul>
                                         </li>
                                     </th>

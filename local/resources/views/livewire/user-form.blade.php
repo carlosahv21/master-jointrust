@@ -48,10 +48,10 @@
         </div>
         <div class="col-6 p-2">
             <label for="inputCumpleanios" class="form-label">Cumpleaños</label>
-            <input wire:model="user.date_birthday" type="text" class="form-control" placeholder="Ej: 15/10/1990" id="inputCumpleanios">
-            @if ($errors->has('user.date_birthday'))
+            <input wire:model="date_birthday" type="text" class="form-control" placeholder="Ej: 15/10/1990" id="inputCumpleanios">
+            @if ($errors->has('date_birthday'))
                 <div class="invalid-feedback">
-                    {{ $errors->first('user.date_birthday') }}
+                    {{ $errors->first('date_birthday') }}
                 </div>
             @endif
         </div>       

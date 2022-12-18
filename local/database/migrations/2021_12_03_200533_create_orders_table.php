@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->string('code',10)->unique();
-            $table->decimal('gift_sets',10,2)->nullable();
+            $table->integer('gift_sets')->unsigned()->references('id')->on('gift_sets');
             $table->decimal('subtotal',10,2)->nullable();
             $table->decimal('tax',10,2)->nullable();
             $table->decimal('total',10,2)->nullable();

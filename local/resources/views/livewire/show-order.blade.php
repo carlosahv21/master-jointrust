@@ -144,12 +144,19 @@
                                                     </td>
                                                     <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($order['subtotal'],'2',',','.') }}</td>
                                                 </tr>
-                                                @if ($shipping['value'])
+                                                @if ($shipping)
                                                     <tr>
                                                         <td class="left">
                                                             <strong>Domicilio</strong>
                                                         </td>
                                                         <td class="right"> <i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($shipping['value'],'2',',','.') }}</td>
+                                                    </tr>
+                                                @else
+                                                    <tr>
+                                                        <td class="left">
+                                                            <strong>Domicilio</strong>
+                                                        </td>
+                                                        <td class="right"> <strong> Este domicilio no tiene zona asignada </strong></td>
                                                     </tr>
                                                 @endif
 
@@ -169,14 +176,18 @@
                                                         <strong>
                                                             <i class="fas fa-dollar-sign" aria-hidden="true"></i>
 
-                                                            @if( ($order['gift_sets']) && $shipping['value'])
+                                                            @if( ($order['gift_sets']) && $shipping)
                                                                 {{ number_format($order['total'] + $order['gift_sets'] + $shipping['value'],'2',',','.') }}
-                                                            @elseif( !($order['gift_sets']) && ($shipping['value']))
+                                                            @elseif( !($order['gift_sets']) && ($shipping))
                                                                 {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
-                                                            @elseif( ($order['gift_sets']) && !($shipping['value']))
+                                                            @elseif( ($order['gift_sets']) && !($shipping))
                                                                 {{ number_format($order['total'] + $order['gift_sets'] ,'2',',','.') }}
                                                             @else
-                                                                {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
+                                                                @if( $shipping )
+                                                                    {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
+                                                                @else
+                                                                    {{ number_format($order['total'] ,'2',',','.') }}
+                                                                @endif
                                                             @endif
                                                         </strong>
                                                     </td>
@@ -185,8 +196,8 @@
                                         </table>
                                     </div>
                                 </div>
-                                <h4>Metodo de Pago:</h4>
-                                <span>payment@volt.com</span>
+                                <h4>Comentarios</h4>
+                                <span>{{ $order['commentaries'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -198,4 +209,17 @@
         {{-- Footer --}}
         @include('layouts.footer')
     </main>
+    <!-- Modal Alert Empty Shipping-->
+    <div wire:ignore.self class="modal fade" id="alertAddrees" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la dirección seleccionada no cuneta con un domicilio configurado. Quedara guardada su dirección y se le asignara uno antes de realizar su domicilio.
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-layouts.base>

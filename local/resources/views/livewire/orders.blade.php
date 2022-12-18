@@ -34,39 +34,71 @@
             </div>
         </div>
         <div class="row">
-            @if ($products->count())
-                @foreach ($products as $product)
-                    <div class="col-4">
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <img src="{{ asset('local/public/images_products/'.$product->product_image) }}" class="card-img-top img-fluid rounded-start" alt="...">
-                                </div>
-                                <div class="col-md-6">
+            <div  wire:ignore id="productosCarousel" class="carousel slide" data-bs-ride="carousel">
+                @if ($products->count())
+                    <div class="carousel-inner" role="listbox">
+                    @foreach ($products as $product)
+                        @if ($loop->first)
+                        <div class="carousel-item active">
+                            <div class="col-md-3 mb-3 px-2">
+                                <div class="card">
+                                    <img class="card-img-top img-fluid" alt="100%x280" src="{{ asset('local/public/images_products/'.$product->product_image) }}">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="margin-bottom: 0;">{{ strtoupper($product->name )}}</h5>
-                                        <small class="text-muted">{{ $product->reference }} - {{ $product->presentation }}</small> <br>
-                                        <small class="text-muted"><b>Precio:</b> $ {{ number_format($product->price,'0', ',', '.') }} </small>
-                                        <div wire:ignore class="text-end pt-5">
-                                            <a wire:click="addProduct({{ $product->id }},'{{ $product->name }}',{{ $product->price }}, '{{ $product->reference }}' )" class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Agregar al pedido"> 
-                                                <small>
-                                                    <div class="icon-shape icon-xs icon-shape-secondary rounded">
-                                                        <i class="fas fa-cart-plus"></i>
-                                                    </div>
-                                                </small>
-                                            </a>
+                                        <h5 style="margin-bottom:0;">{{ $product->name}} - {{ $product->reference}} </h5>
+                                        <div class="card-text row">
+                                            <div class="col-9" style="display: inline;margin-top: 8px;">
+                                                <b>Precio:</b> $ {{ $product->price}} <br>
+                                            </div>
+                                            <div class="col-3">
+                                                <a wire:click="addProduct({{ $product->id }},'{{ $product->name }}',{{ $product->price }}, '{{ $product->reference }}' )" class="text-secondary right" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Agregar al pedido"> 
+                                                    <small>
+                                                        <div class="icon-shape icon-xs icon-shape-secondary rounded">
+                                                            <i class="fas fa-cart-plus" aria-hidden="true"></i>
+                                                        </div>
+                                                    </small>
+                                                </a>  
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>               
-                @endforeach
-            @else
-                <div class="col-12 my-4 text-center">
-                    <h5 class="text-gray-500"><i class="fas fa-exclamation-triangle"></i> No hay produtos para mostrar</h5>
-                </div>
-            @endif
+                        @else
+                            <div class="carousel-item">
+                                <div class="col-md-3 mb-3 px-2">
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid" alt="100%x280" src="{{ asset('local/public/images_products/'.$product->product_image) }}">
+                                        <div class="card-body">
+                                            <h5 style="margin-bottom:0;">{{ $product->name}} - {{ $product->reference}} </h5>
+                                            <div class="card-text row">
+                                                <div class="col-9" style="display: inline;margin-top: 8px;">
+                                                    <b>Precio:</b> $ {{ $product->price}} <br>
+                                                </div>
+                                                <div class="col-3">
+                                                    <a wire:click="addProduct({{ $product->id }},'{{ $product->name }}',{{ $product->price }}, '{{ $product->reference }}' )" class="text-secondary right" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Agregar al pedido"> 
+                                                        <small>
+                                                            <div class="icon-shape icon-xs icon-shape-secondary rounded">
+                                                                <i class="fas fa-cart-plus" aria-hidden="true"></i>
+                                                            </div>
+                                                        </small>
+                                                    </a>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif                
+                    @endforeach
+                    </div>
+                    <a class="carousel-control-prev bg-transparent w-aut" href="#productosCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next bg-transparent w-aut" href="#productosCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+            </div>
+                @endif  
         </div>
 
         <div class="card border-0 table-wrapper table-responsive">
@@ -164,8 +196,8 @@
                             <label for="inputDeliveryAddress">Dirección de entrega</label>
                         </div>
                         <div class="col-6 text-center" >
-                            <input wire:model="showAddress" type="text" class="form-control" disabled="disabled" placeholder="Aun no has seleccionado una direccion" id="inputDeliveryAddress">
-                            <button wire:click="showShipping" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-default">Selecciona tu direccion de entrega</button>
+                            <input wire:model="showAddress" type="text" class="form-control" disabled="disabled" placeholder="Aun no has seleccionado una dirección" id="inputDeliveryAddress">
+                            <button wire:click="showShipping" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#defaultAddress">Selecciona tu dirección de entrega</button>
                         </div>
                     </div>
                     <div class="mt-4 row">
@@ -186,7 +218,7 @@
                                 <select wire:ignore.self wire:model="gift" wire:change="changeGift($event.target.value)" class="form-select" style="display:none;" id="gift" >
                                         <option>Elegir</option>
                                         @foreach ($gift_sets as $gifts)
-                                            <option value="{{ $gifts->value }}">{{ $gifts->name }} - $ {{ number_format( $gifts->value, '0', ',', '.') }}</option>
+                                            <option value="{{ $gifts->id }}">{{ $gifts->name }} - $ {{ number_format( $gifts->value, '0', ',', '.') }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -208,13 +240,13 @@
                                         <i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal(), '2', ',', '.') }}
                                     </td>
                                 </tr>
-                                @if($this->gift)
+                                @if($this->valueGif)
                                     <tr>
                                         <td class="left">
                                             <strong>Kit de regalo</strong>
                                         </td>
                                         <td class="right">
-                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->gift, '2', ',', '.') }}
+                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->valueGif, '2', ',', '.') }}
                                         </td>
                                     </tr>
                                 @endif
@@ -366,13 +398,13 @@
                                         <i class="fas fa-dollar-sign"></i> {{ number_format((float) Cart::instance('cart')->subtotal(),'2',',','.') }}
                                     </td>
                                 </tr>
-                                @if($this->gift)
+                                @if($this->valueGif)
                                     <tr>
                                         <td class="left">
                                             <strong>Kit de regalo</strong>
                                         </td>
                                         <td class="right">
-                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->gift, '2', ',', '.') }}
+                                            <i class="fas fa-dollar-sign"></i> {{ number_format((float)  $this->valueGif, '2', ',', '.') }}
                                         </td>
                                     </tr>
                                 @endif
@@ -458,11 +490,11 @@
 </div>
 
 <!-- Modal Select address to shipping-->
-<div  wire:ignore.self class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+<div  wire:ignore.self class="modal fade" id="defaultAddress" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="h6 modal-title">Selecciona tu direccion de entrega</h2>
+                <h2 class="h6 modal-title">Selecciona tu dirección de entrega</h2>
             </div>
             <div class="modal-body" style="padding-bottom: 0;">
                 @if ( count($this->addresses) )
@@ -478,7 +510,7 @@
                                 </div>
                             <div class="col-1">
                                 @if ($address->favorite)
-                                    <i class="fas fa-star" style="color: #FBA918" title="Direccion favorita"></i>
+                                    <i class="fas fa-star" style="color: #FBA918" title="Dirección favorita"></i>
                                 @endif
                             </div>
                             <div class="col-1">
@@ -492,6 +524,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="selectShipping" type="button" data-bs-dismiss="modal" class="btn btn-secondary">Seleccionar</button>
+                <button onclick="createAddress()" type="button" class="btn btn-link text-gray-600">Crear dirección</button>
             </div>
         </div>
     </div>
@@ -502,7 +535,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
-                Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la direccion seleccionada no cuneta con un domicilio configurado. Quedara guardada su direccion y se le asignara uno antes de realizar su domicilio.
+                Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la dirección seleccionada no cuneta con un domicilio configurado. Quedara guardada su dirección y se le asignara uno antes de realizar su domicilio.
             </div>
             <div class="modal-footer">
                 <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>

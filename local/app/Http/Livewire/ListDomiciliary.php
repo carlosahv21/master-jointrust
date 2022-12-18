@@ -71,6 +71,7 @@ class ListDomiciliary extends Component
                 $text.="Domicilio "."$".$data_['shipping']."%0D%0A";
                 $text.="Total a Pagar:  "."$".$data_['total']."%0D%0A";
                 $text.="NOTA "."%0D%0A";
+                $text.="*".$data_['note']."* %0D%0A";
                 $text.="------------------------------------------------------"."%0D%0A";
             }
             
@@ -112,6 +113,7 @@ class ListDomiciliary extends Component
                     $data[$user->first_name." ".$user->last_name]['address']  = $address->address;
                     $data[$user->first_name." ".$user->last_name]['shipping'] = number_format( $shipping->value ,'0',',','.') ;
                     $data[$user->first_name." ".$user->last_name]['total']    = number_format( $order->total ,'0',',','.') ;
+                    $data[$user->first_name." ".$user->last_name]['note']     = $order->commentaries ;
                     
                     $aux_sum = $aux_sum + $order_product[$i]->qty;
                     $data[$user->first_name." ".$user->last_name]['boxes']    = $aux_sum;

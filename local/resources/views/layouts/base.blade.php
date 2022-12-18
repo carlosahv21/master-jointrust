@@ -91,6 +91,13 @@
 
     @livewireScripts
     <script>
+        function createAddress() {
+            $('#defaultAddress').modal('hide');
+
+            $("#useAddress").val('true');
+            $('#address').modal('show');
+        }
+
         function addShiping(sel, id) {
 
             $.ajax({
@@ -127,6 +134,49 @@
                         });
                 }else{
 
+                }
+            });
+        }
+
+        function sendWhatsapp(sel, id, url) {
+            $.ajax({
+                type: "get",
+                url: '/'+url+'/'+id,   
+                success: function(respu){    
+                if(respu){
+                    var message = respu;
+                    $('#text_copy').val(message);
+                    var $temp = $("<input>")
+                    $("body").append($temp);
+                    $temp.val($('#text_copy').val()).select();
+                    document.execCommand("copy");
+                    $temp.remove();
+
+                    const notyf = new Notyf({
+                        position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+                            types: [
+                                {
+                                    type: 'success',
+                                    background: '#10B981',
+                                    icon: {
+                                        className: 'fas fa-check',
+                                        tagName: 'span',
+                                        color: '#fff'
+                                    },
+                                    dismissible: false
+                                }
+                            ]
+                        });
+                        notyf.open({
+                            type: 'success',
+                            message: 'Mensaje copiado. Pegalo en tu navegador para que confirmes el pedido!',
+                        });
+                    }else{
+                        
+                    }
                 }
             });
         }
@@ -234,6 +284,10 @@
                 window.location.href = "{{ route('orders')}}";
             });
 
+            $('#address').on('hidden.bs.modal', function(){
+                $("#inputAddress").val('');
+            });
+
             $('#see-password').on('click',function (params) {
                 if($('#password').attr('type') == 'password'){
                     $('#password').attr('type', 'text');
@@ -312,51 +366,6 @@
                             type: 'success',
                             message: 'Mensaje copiado. Pegalo en tu navegador para que invites al usuario!',
                         });
-                    }
-                });
-            });
-
-            $('.sendWhatsapp').on('click', function() {
-                var id = $(this).attr('data-id');
-                var url = $(this).attr('data-url');
-                $.ajax({
-                    type: "get",
-                    url: '/'+url+'/'+id,   
-                    success: function(respu){    
-                    if(respu){
-                        var message = respu;
-                        $('#text_copy').val(message);
-                        var $temp = $("<input>")
-                        $("body").append($temp);
-                        $temp.val($('#text_copy').val()).select();
-                        document.execCommand("copy");
-                        $temp.remove();
-
-                        const notyf = new Notyf({
-                            position: {
-                                    x: 'right',
-                                    y: 'top',
-                                },
-                                types: [
-                                    {
-                                        type: 'success',
-                                        background: '#10B981',
-                                        icon: {
-                                            className: 'fas fa-check',
-                                            tagName: 'span',
-                                            color: '#fff'
-                                        },
-                                        dismissible: false
-                                    }
-                                ]
-                            });
-                            notyf.open({
-                                type: 'success',
-                                message: 'Mensaje copiado. Pegalo en tu navegador para que confirmes el pedido!',
-                            });
-                        }else{
-                            
-                        }
                     }
                 });
             });

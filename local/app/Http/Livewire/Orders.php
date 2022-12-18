@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Address;
+use App\Models\GiftSet;
 use App\Models\Shipping;
 
 use Livewire\WithPagination;
@@ -205,6 +206,13 @@ class Orders extends Component
         return view('livewire.show-order',$this->formatData($id));
     }
 
+    public function view($id)
+    {
+        $id = decrypt($id);
+
+        return view('livewire.show-order',$this->formatData($id));
+    }
+
     public function confirmation($id){
         $data = $this->formatData($id);
         $text = "https://web.whatsapp.com/send/?phone=+57".$data['user']['phone']."&text=Sr.(a) *".$data['user']['first_name']." ".$data['user']['last_name']."*, cordial saludo.%0D%0ASu pedido queda programado durante la tarde de hoy entre 3 y 9 p.m, a la siguiente direcci%C3%B3n *(".$data['address']['address'].")*: %0D%0A%0D%0A";
@@ -214,7 +222,16 @@ class Orders extends Component
         }
 
         $text.= "Domicilio - $". number_format( $data['shipping']['value'] ,'0',',','.')  ." %0D%0A%0D%0A";
-        $text.= "*Total a pagar: $". number_format( $data['shipping']['value'] + $data['order']['total'] ,'0',',','.') ." - CONFIRMAR LA FORMA DE PAGO.*%0D%0A%0D%0A";
+        
+        if( $data['order']['gift_sets'] ){
+            $text.= "Kit de regalo - $". number_format( $data['order']['gift_sets'] ,'0',',','.')  ." %0D%0A%0D%0A";
+            $total = $data['shipping']['value'] + $data['order']['total'] + $data['order']['gift_sets'];
+
+        }else{
+            $total = $data['shipping']['value'] + $data['order']['total'];
+        }
+
+        $text.= "*Total a pagar: $". number_format( $total ,'0',',','.') ." - CONFIRMAR LA FORMA DE PAGO.*%0D%0A%0D%0A";
         $text.= "_*POR FAVOR VERIFICAR LA INFORMACI%C3%93N. EN CASO QUE LA DIRECCI%C3%93N NO CORRESPONDA Y NO INFORME DICHO CAMBIO EN LOS SIGUIENTES 20 MINUTOS DE LLEGADO ESTE MENSAJE%2C EL DOMICILIO SER%C3%81 COBRADO ADICIONAL.*_ ¡Feliz día!";
     
         return str_replace("#","%23",$text);
@@ -311,15 +328,18 @@ class Orders extends Component
         $this->valueShipping = $_data->value;
     }
 
-    public function changeGift($value){
-        $this->valueGif = $value;
+    public function changeGift($id){
+        if($id){
+            $gift = GiftSet::find($id);
+            $this->valueGif = $gift->value;
+        }
     }
 
     public function render()
     {
         return view('livewire.orders',
             [
-                'products'  => Product::search('name', $this->search)->paginate(6),
+                'products'  => Product::search('name', $this->search)->paginate(100),
                 'gift_sets' => DB::table('gift_sets')->get()
             ]
         );   

@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->back();
     })->name('markAsRead');
     Route::get('/view-order/{id}/{notification_id?}', [Orders::class, 'show']);
+    Route::get('/view/{id}', [Orders::class, 'view']);
     Route::get('/confirmation/{id}', [Orders::class, 'confirmation'])->name('confirmation');
     Route::get('/list-order', ListOrders::class)->name('list-order');
 

@@ -37,7 +37,7 @@ class Order extends Model
 
     public function gifts()
     {
-        return $this->belongsToMany('App\Models\GiftSet');
+        return $this->belongsTo('App\Models\GiftSet');
     }
 
     public function address()

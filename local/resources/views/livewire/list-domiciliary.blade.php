@@ -150,7 +150,7 @@
                                         </div>
                                     </div>
                                 <div class="col-3">
-                                    <button class="btn btn-secondary me-2 sendWhatsapp" data-id="{{ $user->id }}" data-bs-dismiss="modal" data-url="sendRouteWhatsapp" class="btn btn-secondary">Enviar</button>
+                                    <button class="btn btn-secondary me-2" onclick="sendWhatsapp(this, {{ $user->id }} , 'sendRouteWhatsapp')" data-bs-dismiss="modal" class="btn btn-secondary">Enviar</button>
                                 </div>
                             </div>
                         @endforeach
