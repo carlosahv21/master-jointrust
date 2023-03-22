@@ -52,34 +52,34 @@ class ListDomiciliary extends Component
     public function sendRouteWhatsapp($id)
     {
         $data = $this->formatData($id);
+        
+        if((!$data['order_data'])){
+            return array( 'response' => false , 'type' => 'Domiciliary');
+        }
 
-        if($data['order_data']){
-            $sum_boxes = 0;
-            foreach ($data['order_data'] as $user_name => $data_) {
-                $sum_boxes= $sum_boxes + $data_['boxes'];
+        $sum_boxes = 0;
+        foreach ($data['order_data'] as $user_name => $data_) {
+            $sum_boxes= $sum_boxes + $data_['boxes'];
+        }
+
+        $text = "https://web.whatsapp.com/send/?phone=+57".$data['domiciliary']['phone']."&text=Hola *".$data['domiciliary']['name']."*, esta es la ruta asignada con un total de ".$sum_boxes." cajas,  Repartidas de la siguiente forma:  %0D%0A%0D%0A";
+
+        foreach ($data['order_data'] as $user_name => $data_) {
+            $text.= $user_name."(".$data_['address']."): "."%0D%0A%0D%0A";
+
+            for ($i=0; $i < count($data_['products']); $i++) { 
+                $text.= $data_['products'][$i]['qty']." ".$data_['products'][$i]['name']." ".$data_['products'][$i]['reference']."%0D%0A";
             }
 
-            $text = "https://web.whatsapp.com/send/?phone=+57".$data['domiciliary']['phone']."&text=Hola *".$data['domiciliary']['name']."*, esta es la ruta asignada con un total de ".$sum_boxes." cajas,  Repartidas de la siguiente forma:  %0D%0A%0D%0A";
-
-            foreach ($data['order_data'] as $user_name => $data_) {
-                $text.= $user_name."(".$data_['address']."): "."%0D%0A%0D%0A";
-
-                for ($i=0; $i < count($data_['products']); $i++) { 
-                    $text.= $data_['products'][$i]['qty']." ".$data_['products'][$i]['name']." ".$data_['products'][$i]['reference']."%0D%0A";
-                }
-
-                $text.="Domicilio "."$".$data_['shipping']."%0D%0A";
-                $text.="Total a Pagar:  "."$".$data_['total']."%0D%0A";
-                $text.="NOTA "."%0D%0A";
-                $text.="*".$data_['note']."* %0D%0A";
-                $text.="------------------------------------------------------"."%0D%0A";
-            }
-            
-            return str_replace("#","%23",$text);
-        }else{
-            return false;
+            $text.="Domicilio "."$".$data_['shipping']."%0D%0A";
+            $text.="Total a Pagar:  "."$".$data_['total']."%0D%0A";
+            $text.="NOTA "."%0D%0A";
+            $text.="*".$data_['note']."* %0D%0A";
+            $text.="------------------------------------------------------"."%0D%0A";
         }
         
+        return array( 'response' => true , 'msg' => str_replace("#","%23",$text));
+
     }
 
     public function formatData($id)

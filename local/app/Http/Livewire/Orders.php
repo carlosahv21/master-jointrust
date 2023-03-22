@@ -209,12 +209,17 @@ class Orders extends Component
     public function view($id)
     {
         $id = decrypt($id);
-
+        // dd($this->formatData($id));
         return view('livewire.show-order',$this->formatData($id));
     }
 
     public function confirmation($id){
         $data = $this->formatData($id);
+        
+        if((!$data['shipping'])){
+            return array('response' => false , 'type' => 'Order', 'user_id' => $data['user']['id']);
+        }
+
         $text = "https://web.whatsapp.com/send/?phone=+57".$data['user']['phone']."&text=Sr.(a) *".$data['user']['first_name']." ".$data['user']['last_name']."*, cordial saludo.%0D%0ASu pedido queda programado durante la tarde de hoy entre 3 y 9 p.m, a la siguiente direcci%C3%B3n *(".$data['address']['address'].")*: %0D%0A%0D%0A";
 
         foreach ($data['order_data'] as $key => $value) {
@@ -223,9 +228,9 @@ class Orders extends Component
 
         $text.= "Domicilio - $". number_format( $data['shipping']['value'] ,'0',',','.')  ." %0D%0A%0D%0A";
         
-        if( $data['order']['gift_sets'] ){
-            $text.= "Kit de regalo - $". number_format( $data['order']['gift_sets'] ,'0',',','.')  ." %0D%0A%0D%0A";
-            $total = $data['shipping']['value'] + $data['order']['total'] + $data['order']['gift_sets'];
+        if( $data['gift_set'] ){
+            $text.= "Kit de regalo - $". number_format( $data['gift_set']['value'] ,'0',',','.')  ." %0D%0A%0D%0A";
+            $total = $data['shipping']['value'] + $data['order']['total'] + $data['gift_set']['value'];
 
         }else{
             $total = $data['shipping']['value'] + $data['order']['total'];
@@ -234,14 +239,16 @@ class Orders extends Component
         $text.= "*Total a pagar: $". number_format( $total ,'0',',','.') ." - CONFIRMAR LA FORMA DE PAGO.*%0D%0A%0D%0A";
         $text.= "_*POR FAVOR VERIFICAR LA INFORMACI%C3%93N. EN CASO QUE LA DIRECCI%C3%93N NO CORRESPONDA Y NO INFORME DICHO CAMBIO EN LOS SIGUIENTES 20 MINUTOS DE LLEGADO ESTE MENSAJE%2C EL DOMICILIO SER%C3%81 COBRADO ADICIONAL.*_ ¡Feliz día!";
     
-        return str_replace("#","%23",$text);
+        return array( 'response' => true , 'msg' => str_replace("#","%23",$text));
     }
 
     public function formatData($id)
     {
         $order = Order::find($id);
         $address = Address::find($order->delivery_address);
+        $gift_set = GiftSet::find($order->gift_sets);
         $shipping = Shipping::find($address->shipping_id);
+
 
         $order_data = DB::table('products')
             ->join('order_product', 'products.id', '=', 'order_product.product_id')
@@ -257,8 +264,9 @@ class Orders extends Component
         $user = collect($user)->toArray();
         $address = collect($address)->toArray();
         $shipping = collect($shipping)->toArray();
+        $gift_set = collect($gift_set)->toArray();
 
-        return ['order' => $order, 'order_data' => $order_data, 'user' => $user, 'address' => $address, 'shipping' => $shipping];
+        return ['order' => $order, 'order_data' => $order_data, 'user' => $user, 'address' => $address, 'shipping' => $shipping , 'gift_set' => $gift_set];
     }
 
     public function acceptPopup(){

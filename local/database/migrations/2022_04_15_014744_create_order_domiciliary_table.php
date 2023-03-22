@@ -18,7 +18,6 @@ class CreateOrderDomiciliaryTable extends Migration
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('user_id');
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamps();
         });
     }

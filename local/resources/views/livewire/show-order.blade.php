@@ -34,7 +34,7 @@
                         <i class="fas fa-file-pdf"></i> Descargar
                     </button>
                     @if ($order['state'] != 'Entregado')
-                        <button class="btn btn-info me-2 dropdown-toggle sendWhatsapp" data-id="{{ $order['id'] }}" data-url="confirmation">
+                        <button class="btn btn-info me-2 dropdown-toggle" onclick="sendWhatsapp(this, {{ $order['id'] }} , 'confirmation')" data-url="confirmation">
                             <span class="fas fa-sms"></span> Confirmar pedido
                         </button>
                     @endif
@@ -165,7 +165,7 @@
                                                         <td class="left">
                                                             <strong>Kit de regalo</strong>
                                                         </td>
-                                                        <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($order['gift_sets'],'2',',','.')}}</td>
+                                                        <td class="right"><i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ number_format($gift_set['value'],'2',',','.')}}</td>
                                                     </tr>
                                                 @endif
                                                 <tr>
@@ -176,12 +176,12 @@
                                                         <strong>
                                                             <i class="fas fa-dollar-sign" aria-hidden="true"></i>
 
-                                                            @if( ($order['gift_sets']) && $shipping)
-                                                                {{ number_format($order['total'] + $order['gift_sets'] + $shipping['value'],'2',',','.') }}
-                                                            @elseif( !($order['gift_sets']) && ($shipping))
+                                                            @if( ($gift_set['value']) && $shipping)
+                                                                {{ number_format($order['total'] + $gift_set['value'] + $shipping['value'],'2',',','.') }}
+                                                            @elseif( !($gift_set['value']) && ($shipping))
                                                                 {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
-                                                            @elseif( ($order['gift_sets']) && !($shipping))
-                                                                {{ number_format($order['total'] + $order['gift_sets'] ,'2',',','.') }}
+                                                            @elseif( ($gift_set['value']) && !($shipping))
+                                                                {{ number_format($order['total'] + $gift_set['value'] ,'2',',','.') }}
                                                             @else
                                                                 @if( $shipping )
                                                                     {{ number_format($order['total'] + $shipping['value'],'2',',','.') }}
@@ -214,10 +214,11 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la dirección seleccionada no cuneta con un domicilio configurado. Quedara guardada su dirección y se le asignara uno antes de realizar su domicilio.
+                    Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la dirección de entrega de este pedido no cuenta con un domicilio configurado. Para poder confirmar el pedido configura una Zona a la dirección.
                 </div>
                 <div class="modal-footer">
-                    <button type="button"  data-bs-dismiss="modal" class="btn btn-secondary">Aceptar</button>
+                    <button type="button" id="goSetZone" class="btn btn-secondary" data-bs-dismiss="modal">Configurar Zona</button>
+                    <button type="button" class="btn btn-link text-gray-600" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>

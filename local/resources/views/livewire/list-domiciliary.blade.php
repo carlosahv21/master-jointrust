@@ -81,7 +81,7 @@
                                 <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
                                 <th>{{ $order->orders->address->address }}</th>
                                 <th>{{ ucfirst($order->orders->user->first_name) }} {{ ucfirst($order->orders->user->last_name) }}</th>
-                                <th>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y')  }}</th>
+                                <th>{{ \Carbon\Carbon::parse($order->date_order)->format('d-m-Y')  }}</th>
                                 <th style="width: 5%;">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
@@ -158,6 +158,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Alert Empty Domiciliary-->
+    <div wire:ignore.self class="modal fade" id="alertDomiciliary" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    Este usuario no tiene domicilios configurados para el dia de hoy.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>

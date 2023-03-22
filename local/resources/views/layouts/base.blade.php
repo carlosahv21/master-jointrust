@@ -143,8 +143,8 @@
                 type: "get",
                 url: '/'+url+'/'+id,   
                 success: function(respu){    
-                if(respu){
-                    var message = respu;
+                if(respu.response != false){
+                    var message = respu.msg;
                     $('#text_copy').val(message);
                     var $temp = $("<input>")
                     $("body").append($temp);
@@ -175,6 +175,16 @@
                             message: 'Mensaje copiado. Pegalo en tu navegador para que confirmes el pedido!',
                         });
                     }else{
+                        switch (respu.type) {
+                            case 'Order':
+                                $('#alertAddrees').modal('show');
+                                break;
+                            case 'Domiciliary':
+                                $('#alertDomiciliary').modal('show');
+                                break;
+                            default:
+                                break;
+                        }
                         
                     }
                 }
@@ -286,6 +296,10 @@
 
             $('#address').on('hidden.bs.modal', function(){
                 $("#inputAddress").val('');
+            });
+
+            $('#goSetZone').on('click', function(){
+                window.location.href = "{{ route('users')}}";
             });
 
             $('#see-password').on('click',function (params) {

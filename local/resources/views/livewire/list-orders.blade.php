@@ -119,7 +119,7 @@
                                         {{ $order->code }}
                                     </td>
                                     <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
-                                    <th>{{ $order->address }}</th>
+                                    <th>{{ $order->address->address }}</th>
                                     <th>{{ $order->date_order }}</th>
                                     <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
                                     <th>
@@ -289,6 +289,20 @@
                 <div class="modal-footer">
                     <button wire:click="saveCommentaries" class="btn btn-secondary">Guardar</button>
                     <button type="button" class="btn btn-link text-gray-600 " data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Alert Empty Shipping-->
+    <div wire:ignore.self class="modal fade" id="alertAddrees" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    Sr. (a) {{ auth()->user()->first_name .' '. auth()->user()->last_name}}, la dirección de entrega de este pedido no cuenta con un domicilio configurado. Para poder confirmar el pedido configura una Zona a la dirección.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="goSetZone" class="btn btn-secondary" data-bs-dismiss="modal">Configurar Zona</button>
+                    <button type="button" class="btn btn-link text-gray-600" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>
