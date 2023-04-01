@@ -5,7 +5,10 @@ namespace App\Http\Livewire\Auth;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use App\Mail\UserConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 class Register extends Component
 {
@@ -37,18 +40,19 @@ class Register extends Component
         $user->remember_token = Str::random(10);
         $user->password = Hash::make($this->password);
 
-        $user->save();
+        if($user->save()){
+            $hash = Crypt::encryptString(date('Y-m-d H:i:s')."/".$this->email."/".$this->password);
+            $url =  explode('/', url()->current())[2]."/confirm-email/".$hash;
 
-        // $user = User::create([
-        //     'email' =>$this->email,
-        //     'password' => Hash::make($this->password),
-        //     'remember_token' => Str::random(10),
-        //     'role' => 'client'
-        // ]);
+            $data = [
+                'email' => $user->email,
+                'url' => $url
+            ];
 
-        auth()->login($user);
-
-        return redirect('/profile');
+            $correo = new UserConfirmation($data);
+            Mail::to($this->email,$correo)->send($correo);
+        }
+        
     }
 
     public function render()

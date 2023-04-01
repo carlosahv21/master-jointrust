@@ -54,6 +54,9 @@ Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')
 Route::get('/404', Err404::class)->name('404');
 Route::get('/500', Err500::class)->name('500');
 Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
+Route::get('/confirm-email/{token}', [ Users::class, 'confirmEmail' ]);
+Route::get('/deleteUserRegister/{email}', [ Users::class, 'deleteUserRegister' ]);
+Route::get('/loginUser/{email}', [ Users::class, 'loginUser' ]);
 
 Route::middleware('auth')->group(function () {
     // Rutas de Usuario

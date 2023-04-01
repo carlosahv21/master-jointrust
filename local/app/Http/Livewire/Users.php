@@ -2,19 +2,22 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
+
 use Livewire\Component;
-use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\Guest;
-use App\Models\Address;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
+use App\Models\Address;
+use App\Models\User;
 
 class Users extends Component
 {
     use WithPagination;
-    public $item, $action, $search, $countUsers, $title_modal = '';
+    public $item, $action, $search, $countUsers, $title_modal, $user_email = '';
     public $selected, $shippings, $addresses = [];
 
     protected $paginationTheme = 'bootstrap';
@@ -40,6 +43,8 @@ class Users extends Component
         }else if($action == 'seeAddress'){
             $this->dispatchBrowserEvent('openModal', ['name' => 'seeAddress']);
             $this->emit('seeAddress', $this->item);
+        }else if($action == 'deleteUserRegister'){
+            $this->emit('deleteUserRegister', $this->item);
         }else{
             $this->title_modal = 'Editar Usuario';
             $this->dispatchBrowserEvent('openModal', ['name' => 'createUser']);
@@ -88,6 +93,59 @@ class Users extends Component
         }
         return false;
 
+    }
+
+    public function confirmEmail($token)
+    {
+        try {
+            $decrypted = Crypt::decryptString($token);
+            $decrypted_ = explode("/",$decrypted);
+
+            $to = Carbon::createFromFormat('Y-m-d H:i:s',  $decrypted_[0]);
+            $date = Carbon::parse(date('Y-m-d H:i:s'))->format('Y-m-d H:i:s');
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $date );
+    
+            $diff_day = $to->diffInHours($from);
+
+            $data = [
+                'email' => $decrypted_[1],
+                'password' => $decrypted_[2],
+                'diff_day' => $diff_day
+            ];
+
+        } catch (DecryptException $e) {
+            // ...
+        }
+
+        return view('livewire.confirm-email', ['data' => $data]);
+    }
+
+    public function loginUser($token)
+    {
+        try {
+            $decrypted = Crypt::decryptString($token);
+            $decrypted_ = explode("-",$decrypted);
+            if(auth()->attempt(['email' => $decrypted_[0], 'password' => $decrypted_[1]])){
+                $user = User::where('email', $decrypted_[0])->first();
+
+                $user->email_verified_at = 'yes';
+                $user->save();
+
+                return redirect('/profile');
+            }
+
+        } catch (DecryptException $e) {
+            // ...
+        }
+        
+    }
+
+    public function deleteUserRegister($email)
+    {
+        $user = User::where('email', $email)->first();
+        $user->delete();
+
+        return redirect('/login');
     }
 
     public function forcedCloseModal()

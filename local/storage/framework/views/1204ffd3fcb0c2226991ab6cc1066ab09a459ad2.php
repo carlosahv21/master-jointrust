@@ -22,7 +22,7 @@
     </main>
 
     <?php elseif(in_array(request()->route()->getName(), ['register', 'register-example', 'login', 'login-example',
-    'forgot-password', 'forgot-password-example', 'reset-password','reset-password-example'])): ?>
+    'forgot-password', 'forgot-password-example', 'reset-password','confirm-email/'])): ?>
 
     <?php echo e($slot); ?>
 
