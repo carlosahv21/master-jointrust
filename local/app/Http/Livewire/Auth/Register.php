@@ -53,6 +53,7 @@ class Register extends Component
             Mail::to($this->email,$correo)->send($correo);
         }
         
+        $this->dispatchBrowserEvent('openModal', ['name' => 'back_to_login']);
     }
 
     public function render()

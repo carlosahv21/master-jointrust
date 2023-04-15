@@ -6661,9 +6661,9 @@ textarea.form-control-lg {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 2%;
   padding: 0;
-  color: #ffffff;
+  color: #000;
   text-align: center;
   background: none;
   border: 0;
@@ -6676,7 +6676,7 @@ textarea.form-control-lg {
   .carousel-control-prev:hover, .carousel-control-prev:focus,
   .carousel-control-next:hover,
   .carousel-control-next:focus {
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
     outline: 0;
     opacity: 0.9; }

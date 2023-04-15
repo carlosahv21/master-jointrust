@@ -234,6 +234,10 @@
                 window.location.href = "{{ route('orders')}}";
             });
 
+            $('#back_to_login').on('hidden.bs.modal', function(){
+                window.location.href = "{{ route('orders')}}";
+            });
+
             $('#see-password').on('click',function (params) {
                 if($('#password').attr('type') == 'password'){
                     $('#password').attr('type', 'text');

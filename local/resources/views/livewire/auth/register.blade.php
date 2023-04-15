@@ -67,3 +67,15 @@
             </div>
         </section>
     </main>
+    <div wire:ignore.self class="modal fade" id="back_to_login" tabindex="-1" aria-labelledby="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    ¡Gracias por registrarte, recibiras un correo electronico para poder confirmar tu email!
+                    <div class="d-flex justify-content-center py-4">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

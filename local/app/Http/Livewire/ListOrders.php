@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Order;
 use Livewire\WithPagination;
-use App\Models\Product;
+use App\Models\Shipping;
 use App\Models\User;
 use App\Models\OrderDomiciliary;
 use DateTime;

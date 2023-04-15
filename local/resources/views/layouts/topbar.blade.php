@@ -2,15 +2,7 @@
   <div class="container-fluid px-0">
     <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
       <div class="d-flex align-items-center">
-        <!-- Search form -->
-        <form class="navbar-search form-inline" id="navbar-search-main">
-          <div class="input-group input-group-merge search-bar">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-              <button class="btn btn-pill btn-outline-gray-500" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
-            </div>
-          </div>
-        </form>
+        <h2 class="h4">@yield('title')</h2>
       </div>
       <!-- Navbar links -->
       <ul class="navbar-nav align-items-center">

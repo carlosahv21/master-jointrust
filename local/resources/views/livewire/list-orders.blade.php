@@ -117,7 +117,31 @@
                                     <td>
                                         {{ $order->code }}
                                     </td>
-                                    <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
+                                    <th> <i class="fas fa-dollar-sign"></i> 
+                                        @php
+                                            $shipping_id = $order->address->shipping_id;
+                                            $gift_sets_id = $order->address->gift_sets;  
+
+                                            if(($gift_sets_id) && ($shipping_id)){
+                                                $shipping = App\Models\Shipping::find($shipping_id);
+                                                $gift_sets = App\Models\GiftSet::find($gift_sets_id);
+
+                                                echo number_format((float) $order->total + $gift_sets->value + $shipping->value , '2', ',', '.') ;
+                                            }elseif (!($gift_sets_id) && ($shipping_id)) {
+                                                $shipping = App\Models\Shipping::find($shipping_id);
+
+                                                echo number_format((float) $order->total + $shipping->value, '2', ',', '.') ;
+
+                                            }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                $gift_sets = App\Models\GiftSet::find($gift_sets_id);
+
+                                                echo number_format((float) $order->total + $gift_sets->value, '2', ',', '.') ;
+                                            }else{
+                                                echo number_format((float) $order->total, '2', ',', '.') ;
+                                            }
+                                        @endphp
+                                    </th>
+
                                     <th>{{ $order->date_order }}</th>
                                     <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
                                     <th>
@@ -155,7 +179,30 @@
                                     <td>
                                         {{ $order->code }}
                                     </td>
-                                    <th> <i class="fas fa-dollar-sign"></i> {{ number_format($order->total,'2',',','.')  }}</th>
+                                    <th> <i class="fas fa-dollar-sign"></i> 
+                                            @php
+                                            $shipping_id = $order->address->shipping_id;
+                                            $gift_sets_id = $order->address->gift_sets;  
+
+                                            if(($gift_sets_id) && ($shipping_id)){
+                                                $shipping = App\Models\Shipping::find($shipping_id);
+                                                $gift_sets = App\Models\GiftSet::find($gift_sets_id);
+
+                                                echo number_format((float) $order->total + $gift_sets->value + $shipping->value , '2', ',', '.') ;
+                                            }elseif (!($gift_sets_id) && ($shipping_id)) {
+                                                $shipping = App\Models\Shipping::find($shipping_id);
+
+                                                echo number_format((float) $order->total + $shipping->value, '2', ',', '.') ;
+
+                                            }elseif (($this->valueGif) && !($this->valueShipping)) {
+                                                $gift_sets = App\Models\GiftSet::find($gift_sets_id);
+                                                
+                                                echo number_format((float) $order->total + $gift_sets->value, '2', ',', '.') ;
+                                            }else{
+                                                echo number_format((float) $order->total, '2', ',', '.') ;
+                                            }
+                                        @endphp
+                                    </th>
                                     <th>{{ $order->date_order }}</th>
                                     <th> <span class="badge text-white" style="background-color:@if ($order->state == 'Pendiente') #FBA918 @elseif ($order->state == 'En Ruta') #11cdef @elseif ($order->state == 'Entregado') #10B981 @elseif ($order->state == 'No Entregado') #E11D48 @endif">{{ $order->state }} </span> </th>
                                     <th style="width: 5%;">
@@ -164,7 +211,11 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <li>
-                                                    <a wire:click="selectItem({{ $order->id }}, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a></li>
+                                                    <a wire:click="selectItem({{ $order->id }}, 'comments')" class="dropdown-item btn-outline-gray-500"><i class="fas fa-edit"></i> Comentarios</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/view-order/{{encrypt( $order->id )}}" class="dropdown-item btn-outline-gray-500"><i class="fas fa-eye"></i> Ver Perdido</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </th>

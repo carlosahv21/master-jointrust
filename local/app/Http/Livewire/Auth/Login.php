@@ -8,8 +8,7 @@ use Livewire\Component;
 class Login extends Component
 {
 
-    public $email = '';
-    public $password = '';
+    public $email, $password = '';
     public $remember_me = false;
 
     protected $rules = [
