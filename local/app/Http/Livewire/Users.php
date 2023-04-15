@@ -19,6 +19,8 @@ class Users extends Component
     use WithPagination;
     public $item, $action, $search, $countUsers, $title_modal, $user_email = '';
     public $selected, $shippings, $addresses = [];
+    public $typeUser = 'Todos';
+    public $perPage = '5';
 
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
@@ -153,10 +155,25 @@ class Users extends Component
         $this->addresses = [];
     }
 
+    public function getUsersProperty()
+    {
+        $input = $this->search;
+
+        return User::when($this->typeUser, function($query) {
+                if($this->typeUser !== 'Todos'){
+                    $query->where('role',$this->typeUser);
+                }
+            })
+            ->where(function ($query) use ($input) {
+                    $query->where('first_name', 'like', '%' . $input . '%');
+            })
+            ->paginate($this->perPage);
+    }
+
     public function render()
     {
         return view('livewire.users', 
-            ['users' => User::search('first_name', $this->search)->paginate(10)]
+            ['users' =>  $this->users]
         );
     }
 }

@@ -28,23 +28,32 @@
 
     <div class="table-settings mb-4">
         <div class="row justify-content-between align-items-center">
-            <div class="col-9 col-lg-9 d-md-flex">
-                <div class="input-group me-2 me-lg-3 fmxw-300">
-                    <span class="input-group-text">
+             <div class="col-8 col-lg-6 d-flex">
+                <div class="input-group me-2 me-lg-3" style="width: 40%;">
+                    <span class="input-group-text"> 
                         <span class="fas fa-search"></span>
                     </span>
-                    <input wire:model="search" type="text" class="form-control" placeholder="Buscar usuario">
+                    <input wire:model.debounce.350ms="search" type="text" class="form-control" placeholder="Buscar Usuario">
+                </div>
+                <div class="col-1 d-flex me-lg-3">
+                    <select wire:model="perPage" class="form-select mb-0" id="entries" aria-label="Entries per page">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="col-2 d-flex me-lg-3">
+                    <select wire:model="typeUser" class="form-select mb-0" id="entries" aria-label="Entries per page">
+                        <option value="Todos"> Todos </option>
+                        <option value="admin"> Administradores </option>
+                        <option value="client"> Clientes </option>
+                        <option value="domiciliary"> Domiciliarios </option>
+                    </select>
                 </div>
             </div>
-            {{-- <div class="col-3 col-lg-3 d-md-flex">
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Bulk Action</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div> --}}
+            
             <div class="col-3 col-lg-3 d-flex justify-content-end">
                 <div class="dropdown px-2">
                     <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
