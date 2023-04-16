@@ -51,6 +51,7 @@
                         <option value="Pendiente"> Pendientes </option>
                         <option value="En Ruta"> En Ruta </option>
                         <option value="Entregado"> Entregados </option>
+                        <option value="Confirmado"> Confirmado </option>
                         <option value="No Entregado"> No Entregados </option>
                     </select>
                 </div>
@@ -145,7 +146,7 @@
                                     <th>{{ $order->date_order }}</th>
                                     <th>{{ ucfirst($order->user->first_name) }} {{ ucfirst($order->user->last_name) }}</th>
                                     <th>
-                                        <span class="badge text-white" style="background-color:@if ($order->state == 'Pendiente') #FBA918 @elseif ($order->state == 'En Ruta') #11cdef @elseif ($order->state == 'Entregado') #10B981 @elseif ($order->state == 'No Entregado') #E11D48 @endif">{{ $order->state }} </span>
+                                        <span class="badge text-white" style="background-color:@if ($order->state == 'Pendiente') #FBA918 @elseif ($order->state == 'En Ruta') #11cdef @elseif ($order->state == 'Entregado') #10B981 @elseif ($order->state == 'Confirmado') #31316a  @elseif ($order->state == 'No Entregado') #E11D48 @endif">{{ $order->state }} </span>
                                     </th>
                                     <th style="width: 5%;">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

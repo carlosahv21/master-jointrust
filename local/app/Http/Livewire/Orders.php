@@ -216,6 +216,12 @@ class Orders extends Component
         $text.= "Domicilio - $". number_format( $data['shipping']['value'] ,'0',',','.')  ." %0D%0A%0D%0A";
         $text.= "*Total a pagar: $". number_format( $data['shipping']['value'] + $data['order']['total'] ,'0',',','.') ." - CONFIRMAR LA FORMA DE PAGO.*%0D%0A%0D%0A";
         $text.= "_*POR FAVOR VERIFICAR LA INFORMACI%C3%93N. EN CASO QUE LA DIRECCI%C3%93N NO CORRESPONDA Y NO INFORME DICHO CAMBIO EN LOS SIGUIENTES 20 MINUTOS DE LLEGADO ESTE MENSAJE%2C EL DOMICILIO SER%C3%81 COBRADO ADICIONAL.*_ ¡Feliz día!";
+
+        if ($text) {
+            $order = Order::find($id);
+            $order->state = 'Confirmado';
+            $order->save();
+        }
     
         return str_replace("#","%23",$text);
     }
